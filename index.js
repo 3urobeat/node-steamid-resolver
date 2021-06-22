@@ -3,6 +3,7 @@
 const https  = require("https")
 const xml2js = require("xml2js")
 
+var debug = false; //logs a few more messages
 
 
 /**
@@ -13,6 +14,7 @@ const xml2js = require("xml2js")
 function getXMLinfo(url) {
     return new Promise((resolve, reject) => {
         try {
+            if (debug) console.log(`[steamid-resolver] Trying to get profile information of ${url}`)
 
             var output = ""
 
@@ -22,20 +24,30 @@ function getXMLinfo(url) {
                 })
 
                 result.on('end', () => { //finished request
+                    if (debug) console.log(`[steamid-resolver] Successfully retrieved information from Steam.`)
+
                     new xml2js.Parser().parseString(output, function(err, parsed) { //parse the XML data from Steam into an object
                         if (err) { //check for parsing error
+                            if (debug) console.log(`[steamid-resolver] Failed to parse user XML info: ${err}`)
+
                             reject("Error parsing user info xml: " + err)
                             return;
                         }
 
-                        if (parsed.response && parsed.response.error) { //check for error
+                        if (parsed.response && parsed.response.error) { //check for error like profile not found
+                            if (debug) console.log(`[steamid-resolver] Error returned from Steam: ${parsed.response.error}`)
+
                             reject(parsed.response.error)
                             return;
                         }
 
-                        if (parsed.profile) {
-                            resolve(parsed.profile)
+                        if (parsed.profile) { //check if profile data exists
+                            if (debug) console.log("[steamid-resolver] Successfully retrieved valid profile information.")
+
+                            resolve(parsed.profile) //resolve promise and pass data back to caller
                         } else {
+                            if (debug) console.log("[steamid-resolver] Steam didn't return any profile information but also no error! Parsed:\n" + parsed)
+
                             reject("No profile information returned")
                             return;
                         }
@@ -43,7 +55,9 @@ function getXMLinfo(url) {
                 }) 
             })
         } catch (err) {
-            reject("Error getting user information from Steam: " + err) //TODO: also check for status code to see if Steam is down
+            if (debug) console.log("[steamid-resolver] No response from Steam or other https error! Error: " + err)
+
+            reject("Error trying to reach Steam: " + err) //TODO: also check for status code to see if Steam is down
             return;
         }
     })
@@ -62,6 +76,6 @@ module.exports.steam64idToCustomUrl = (steam64id, callback) => {
             callback(null, res.customURL[0]) //callback customURL when we are done (which is somehow in an array(?))
         })
         .catch(err => {
-            callback(err, null);
+            callback(err, null); //callback error
         })
 }
