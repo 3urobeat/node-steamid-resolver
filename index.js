@@ -68,7 +68,7 @@ function getXMLinfo(url) {
 /**
  * Get the custom profile url of a user as String by their steam64id
  * @param {String} steam64id steam64id of the user
- * @param {function} [callback] Called with `err` and `customURL` parameters on completion
+ * @param {function} [callback] Called with `err` (String) and `customURL` (String) parameters on completion
  */
 module.exports.steam64idToCustomUrl = (steam64id, callback) => {
     getXMLinfo(`https://steamcommunity.com/profiles/${steam64id}`)
@@ -83,12 +83,42 @@ module.exports.steam64idToCustomUrl = (steam64id, callback) => {
 /**
  * Get the steam64id of a user as String by their custom profile url
  * @param {String} customID Full URL or just the custom ID of the user as String
- * @param {function} [callback] Called with `err` and `steam64id` parameters on completion
+ * @param {function} [callback] Called with `err` (String) and `steam64id` (String) parameters on completion
  */
 module.exports.customUrlToSteam64id = (customID, callback) => {
     getXMLinfo(`https://steamcommunity.com/id/${customID}`)
         .then(res => {
             callback(null, res.steamID64[0])
+        })
+        .catch(err => {
+            callback(err, null);
+        })
+}
+
+/**
+ * Get the full information of a user as Object by their steam64id
+ * @param {String} steam64id steam64id of the user as String
+ * @param {function} [callback] Called with `err` (String) and `info` (Object) parameters on completion
+ */
+module.exports.steam64idToFullInfo = (steam64id, callback) => {
+    getXMLinfo(`https://steamcommunity.com/profiles/${steam64id}`)
+        .then(res => {
+            callback(null, res) //callback customURL when we are done (which is somehow in an array(?))
+        })
+        .catch(err => {
+            callback(err, null); //callback error
+        })
+}
+
+/**
+ * Get the full information of a user as Object by their custom profile url
+ * @param {String} customID Full URL or just the custom ID of the user as String
+ * @param {function} [callback] Called with `err` (String) and `info` (Object) parameters on completion
+ */
+module.exports.customUrlToFullInfo = (customID, callback) => {
+    getXMLinfo(`https://steamcommunity.com/id/${customID}`)
+        .then(res => {
+            callback(null, res)
         })
         .catch(err => {
             callback(err, null);
