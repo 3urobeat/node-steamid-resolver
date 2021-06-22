@@ -9,7 +9,9 @@ Open a terminal in your project folder and type:
 `$ npm install steamid-resolver`  
 
 You can then import the library in your code:  
-`var steamidResolver = require("steamid-resolver")`  
+```
+var steamidResolver = require("steamid-resolver")
+```  
 
 ## Functions  
 ### steam64idToCustomUrl(steam64id, callback)  
