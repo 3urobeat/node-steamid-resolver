@@ -79,3 +79,18 @@ module.exports.steam64idToCustomUrl = (steam64id, callback) => {
             callback(err, null); //callback error
         })
 }
+
+/**
+ * Get the steam64id of a user as String by their custom profile url
+ * @param {String} customID Full URL or just the custom ID of the user as String
+ * @param {function} [callback] Called with `err` and `steam64id` parameters on completion
+ */
+module.exports.customUrlToSteam64id = (customID, callback) => {
+    getXMLinfo(`https://steamcommunity.com/id/${customID}`)
+        .then(res => {
+            callback(null, res.steamID64[0])
+        })
+        .catch(err => {
+            callback(err, null);
+        })
+}
