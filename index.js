@@ -5,53 +5,63 @@ const xml2js = require("xml2js")
 
 
 
-//internal function to get the XML information of a user
-function getXMLinfo(url, callback) {
-    try {
-        var output = ""
+/**
+ * Internal function to get the XML information of a user
+ * @param {String} url Full URL of the user to steamcommunity.com
+ * @returns {Promise} Promise object of the user's full information or an error with description
+ */
+function getXMLinfo(url) {
+    return new Promise((resolve, reject) => {
+        try {
 
-        https.get(`${url}?xml=1`, function(result) {
-            result.on('data', function (chunk) {
-                output += chunk 
-            })
+            var output = ""
 
-            result.on('end', () => { //finished request
-                new xml2js.Parser().parseString(output, function(err, parsed) { //parse the XML data from Steam into an object
-                    if (err) { //check for parsing error
-                        callback()
-                        console.log("[steamid-resolver] Error parsing user info xml: " + err) //error logging needs to be improved I guess
-                        return;
-                    }
-
-                    if (parsed.response && parsed.response.error) {
-                        callback()
-                        console.log("[steamid-resolver] Response error: " + ownerResult.response.error)
-                        return;
-                    }
-
-                    if (parsed.profile) {
-                        callback(parsed.profile)
-                    } else {
-                        console.log("[steamid-resolver] No profile information returned by Steam.")
-                        return;
-                    }
+            https.get(`${url}?xml=1`, function(result) {
+                result.on('data', function (chunk) {
+                    output += chunk 
                 })
-            }) 
-        })
-    } catch (err) {
-        callback()
-        return console.log("[steamid-resolver] Error getting user information from Steam: " + err) //error logging needs to be improved I guess (also check for status code to see if Steam is down)
-    }
+
+                result.on('end', () => { //finished request
+                    new xml2js.Parser().parseString(output, function(err, parsed) { //parse the XML data from Steam into an object
+                        if (err) { //check for parsing error
+                            reject("Error parsing user info xml: " + err)
+                            return;
+                        }
+
+                        if (parsed.response && parsed.response.error) { //check for error
+                            reject(parsed.response.error)
+                            return;
+                        }
+
+                        if (parsed.profile) {
+                            resolve(parsed.profile)
+                        } else {
+                            reject("No profile information returned")
+                            return;
+                        }
+                    })
+                }) 
+            })
+        } catch (err) {
+            reject("Error getting user information from Steam: " + err) //TODO: also check for status code to see if Steam is down
+            return;
+        }
+    })
+    
 }
 
 
 /**
  * Get the custom profile url of a user as String by their steam64id
  * @param {String} steam64id steam64id of the user
- * @callback String The user's custom ID as callback
+ * @param {function} [callback] Called with `err` and `customURL` parameters on completion
  */
 module.exports.steam64idToCustomUrl = (steam64id, callback) => {
-    getXMLinfo(`https://steamcommunity.com/profiles/${steam64id}`, (res) => {
-        callback(res.customURL[0]) //callback customURL when we are done (which is somehow in an array(?))
-    })
+    getXMLinfo(`https://steamcommunity.com/profiles/${steam64id}`)
+        .then(res => {
+            callback(null, res.customURL[0]) //callback customURL when we are done (which is somehow in an array(?))
+        })
+        .catch(err => {
+            callback(err, null);
+        })
 }
