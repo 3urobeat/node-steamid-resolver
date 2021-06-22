@@ -24,4 +24,16 @@ var steamidResolver = require("steamid-resolver")
 - `customURL` - The customURL as String of the user you want to get the steam64id of. Example: `"3urobeat"` (coming from `https://steamcommunity.com/id/3urobeat`)  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
-    - `steam64id` - The steam64id of the user or `null` on failure. Example on succes: `"76561198260031749"`
+    - `steam64id` - The steam64id of the user or `null` on failure. Example on succes: `"76561198260031749"`  
+
+### steam64idToFullInfo(customURL, callback)  
+- `customURL` - The steam64id as String of the user you want to get all information of. Example: `"76561198260031749"`  
+- `callback` - Called on error or success  
+    - `err` - A String detailing the reason of the failure or `null` on success
+    - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1)`  
+
+### customUrlToFullInfo(customURL, callback)  
+- `customURL` - The customURL as String of the user you want to get all information of. Example: `"3urobeat"` (coming from `https://steamcommunity.com/id/3urobeat`)  
+- `callback` - Called on error or success  
+    - `err` - A String detailing the reason of the failure or `null` on success
+    - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1)` 
