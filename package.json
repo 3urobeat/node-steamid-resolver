@@ -1,0 +1,29 @@
+{
+  "name": "steamid-resolver",
+  "version": "0.1.0",
+  "description": "NPM library to get steamids of profile links/names and the other way around",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HerrEurobeat/node-steamid-resolver.git"
+  },
+  "keywords": [
+    "steam",
+    "steamid",
+    "npm",
+    "library"
+  ],
+  "author": "3urobeat",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/HerrEurobeat/node-steamid-resolver/issues"
+  },
+  "homepage": "https://github.com/HerrEurobeat/node-steamid-resolver#readme",
+  "dependencies": {
+    "https": "^1.0.0",
+    "xml2js": "^0.4.23"
+  }
+}
