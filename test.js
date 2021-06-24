@@ -2,33 +2,33 @@
 
 var steamidResolver = require("./index.js")
 
-steamidResolver.steam64idToCustomUrl("76561198260031749", (err, customURL) => {
-    if (err) return console.log("steam64idToCustomUrl error: " + err)
+steamidResolver.steamID64ToCustomUrl("76561198260031749", (err, customURL) => {
+    if (err) return console.log("steamID64ToCustomUrl error: " + err)
     
     if (customURL == "3urobeat") { //kind of stupid to rely this test on me not changing my my customURL but also why should I ever
-        console.log("steam64idToCustomUrl ok.")
+        console.log("steamID64ToCustomUrl ok.")
     } else {
-        console.log("steam64idToCustomUrl error!")
+        console.log("steamID64ToCustomUrl error!")
     }
 })
 
-steamidResolver.customUrlToSteam64id("3urobeat", (err, steam64id) => {
-    if (err) return console.log("customUrlToSteam64id error: " + err)
+steamidResolver.customUrlTosteamID64("3urobeat", (err, steamID64) => {
+    if (err) return console.log("customUrlTosteamID64 error: " + err)
     
-    if (steam64id == "76561198260031749") {
-        console.log("customUrlToSteam64id ok.")
+    if (steamID64 == "76561198260031749") {
+        console.log("customUrlTosteamID64 ok.")
     } else {
-        console.log("customUrlToSteam64id error!")
+        console.log("customUrlTosteamID64 error!")
     }
 })
 
-steamidResolver.steam64idToFullInfo("76561198260031749", (err, info) => {
-    if (err) return console.log("steam64idToFullInfo error: " + err)
+steamidResolver.steamID64ToFullInfo("76561198260031749", (err, info) => {
+    if (err) return console.log("steamID64ToFullInfo error: " + err)
     
     if (Object.keys(info).length > 5 && info.customURL[0] == "3urobeat" && info.steamID64[0] == "76561198260031749") {
-        console.log("steam64idToFullInfo ok.")
+        console.log("steamID64ToFullInfo ok.")
     } else {
-        console.log("steam64idToFullInfo error!")
+        console.log("steamID64ToFullInfo error!")
     }
 })
 
