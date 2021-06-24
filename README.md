@@ -30,13 +30,13 @@ var steamidResolver = require("steamid-resolver")
 - `customURL` - The steamID64 as String of the user you want to get all information of. Example: `"76561198260031749"`  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
-    - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1)`  
+    - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1)  
 
 ### customUrlToFullInfo(customURL, callback)  
 - `customURL` - The customURL as String of the user you want to get all information of. Example: `"3urobeat"` (coming from `https://steamcommunity.com/id/3urobeat`)  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
-    - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1)` 
+    - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1) 
 
 ### groupUrlToGroupID64(groupURL, callback)  
 - `groupURL` - The groupURL as String of the group you want to get the groupID64 of. Example: `"3urobeatGroup"` (coming from `https://steamcommunity.com/groups/3urobeatGroup`)  
@@ -48,4 +48,4 @@ var steamidResolver = require("steamid-resolver")
 - `groupURL` - The groupURL as String of the group you want to get all information of. Example: `"3urobeatGroup"` (coming from `https://steamcommunity.com/groups/3urobeatGroup`)  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
-    - `info` - The full information of the group as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/groups/3urobeatGroup/memberslistxml?xml=1)` 
+    - `info` - The full information of the group as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/groups/3urobeatGroup/memberslistxml?xml=1) 
