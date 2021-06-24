@@ -1,5 +1,5 @@
 # node-steamid-resolver
-NPM library to get steamids from profile links/names and the other way around.  
+NPM library to get steamids from profile or group links and the other way around.  
 Also includes function to return you all information returned by Steam [from this page](https://steamcommunity.com/id/3urobeat?xml=1) in a nice object format.  
 
 ## Install
@@ -37,3 +37,15 @@ var steamidResolver = require("steamid-resolver")
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1)` 
+
+### groupUrlToGroupID64(groupURL, callback)  
+- `groupURL` - The groupURL as String of the group you want to get the groupID64 of. Example: `"3urobeatGroup"` (coming from `https://steamcommunity.com/groups/3urobeatGroup`)  
+- `callback` - Called on error or success  
+    - `err` - A String detailing the reason of the failure or `null` on success
+    - `groupID64` - The groupID64 of the group or `null` on failure. Example on succes: `"103582791464712227"`  
+
+### groupUrlToFullInfo(groupURL, callback)  
+- `groupURL` - The groupURL as String of the group you want to get all information of. Example: `"3urobeatGroup"` (coming from `https://steamcommunity.com/groups/3urobeatGroup`)  
+- `callback` - Called on error or success  
+    - `err` - A String detailing the reason of the failure or `null` on success
+    - `info` - The full information of the group as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/groups/3urobeatGroup/memberslistxml?xml=1)` 
