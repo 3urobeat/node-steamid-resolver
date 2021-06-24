@@ -41,3 +41,23 @@ steamidResolver.customUrlToFullInfo("3urobeat", (err, info) => {
         console.log("customUrlToFullInfo error!")
     }
 })
+
+steamidResolver.groupUrlToGroupID64("3urobeatGroup", (err, groupID64) => {
+    if (err) return console.log("groupUrlToGroupID64 error: " + err)
+    
+    if (groupID64 == "103582791464712227") {
+        console.log("groupUrlToGroupID64 ok.")
+    } else {
+        console.log("groupUrlToGroupID64 error!")
+    }
+})
+
+steamidResolver.groupUrlToFullInfo("3urobeatGroup", (err, info) => {
+    if (err) return console.log("groupUrlToFullInfo error: " + err)
+    
+    if (Object.keys(info).length > 5 && info.groupDetails[0].groupURL[0] == "3urobeatGroup" && info.groupID64[0] == "103582791464712227") {
+        console.log("groupUrlToFullInfo ok.")
+    } else {
+        console.log("groupUrlToFullInfo error!")
+    }
+})
