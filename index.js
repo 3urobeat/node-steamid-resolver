@@ -7,14 +7,14 @@ var debug = false; //logs a few more messages
 
 
 /**
- * Internal function to get the XML information of a user
- * @param {String} url Full URL of the user to steamcommunity.com
- * @returns {Promise} Promise object of the user's full information or an error with description
+ * Internal function to get the XML information of a user or group
+ * @param {String} url Full URL of the user or group to steamcommunity.com
+ * @returns {Promise} Promise object of the user's or group's full information or an error with description
  */
 function getXMLinfo(url) {
     return new Promise((resolve, reject) => {
         try {
-            if (debug) console.log(`[steamid-resolver] Trying to get profile information of ${url}`)
+            if (debug) console.log(`[steamid-resolver] Trying to get XML data of ${url}`)
 
             var output = ""
 
@@ -28,23 +28,24 @@ function getXMLinfo(url) {
 
                     new xml2js.Parser().parseString(output, function(err, parsed) { //parse the XML data from Steam into an object
                         if (err) { //check for parsing error
-                            if (debug) console.log(`[steamid-resolver] Failed to parse user XML info: ${err}`)
+                            if (debug) console.log(`[steamid-resolver] Failed to parse XML info: ${err}`)
 
                             reject("Error parsing user info xml: " + err)
                             return;
                         }
 
-                        if (parsed.response && parsed.response.error) { //check for error like profile not found
+                        if (parsed.response && parsed.response.error) { //check for error like profile/group not found
                             if (debug) console.log(`[steamid-resolver] Error returned from Steam: ${parsed.response.error}`)
 
                             reject(parsed.response.error)
                             return;
                         }
 
-                        if (parsed.profile) { //check if profile data exists
-                            if (debug) console.log("[steamid-resolver] Successfully retrieved valid profile information.")
+                        if (parsed.profile || parsed.memberList) { //check if profile data exists
+                            if (debug) console.log("[steamid-resolver] Successfully retrieved valid profile/group information.")
 
-                            resolve(parsed.profile) //resolve promise and pass data back to caller
+                            if (parsed.profile) resolve(parsed.profile) //resolve promise and pass data back to caller
+                            if (parsed.memberList) resolve(parsed.memberList)
                         } else {
                             if (debug) console.log("[steamid-resolver] Steam didn't return any profile information but also no error! Parsed:\n" + parsed)
 
@@ -82,7 +83,7 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
 
 /**
  * Get the steamID64 of a user as String by their custom profile url
- * @param {String} customID Full URL or just the custom ID of the user as String
+ * @param {String} customID Custom ID of the user as String
  * @param {function} [callback] Called with `err` (String) and `steamID64` (String) parameters on completion
  */
 module.exports.customUrlTosteamID64 = (customID, callback) => {
@@ -95,10 +96,6 @@ module.exports.customUrlTosteamID64 = (customID, callback) => {
         })
 }
 
-
-module.exports.customUrlToGroupId64
-
-
 /**
  * Get the full information of a user as Object by their steamID64
  * @param {String} steamID64 steamID64 of the user as String
@@ -107,7 +104,7 @@ module.exports.customUrlToGroupId64
 module.exports.steamID64ToFullInfo = (steamID64, callback) => {
     getXMLinfo(`https://steamcommunity.com/profiles/${steamID64}`)
         .then(res => {
-            callback(null, res) //callback customURL when we are done (which is somehow in an array(?))
+            callback(null, res) //callback full object
         })
         .catch(err => {
             callback(err, null); //callback error
@@ -116,7 +113,7 @@ module.exports.steamID64ToFullInfo = (steamID64, callback) => {
 
 /**
  * Get the full information of a user as Object by their custom profile url
- * @param {String} customID Full URL or just the custom ID of the user as String
+ * @param {String} customID Custom ID of the user as String
  * @param {function} [callback] Called with `err` (String) and `info` (Object) parameters on completion
  */
 module.exports.customUrlToFullInfo = (customID, callback) => {
@@ -126,5 +123,35 @@ module.exports.customUrlToFullInfo = (customID, callback) => {
         })
         .catch(err => {
             callback(err, null);
+        })
+}
+
+/**
+ * Get the group64ID of a group as String by groupURL (just the name)
+ * @param {String} groupURL Custom Name of the group as String
+ * @param @param {function} [callback] Called with `err` (String) and `groupID64` (String) parameters on completion
+ */
+module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
+    getXMLinfo(`https://steamcommunity.com/groups/${groupURL}/memberslistxml`)
+        .then(res => {
+            callback(null, res.groupID64[0]) //callback groupID64
+        })
+        .catch(err => {
+            callback(err, null); //callback error
+        })
+}
+
+/**
+ * Get the full information of a group as Object by groupURL
+ * @param {String} groupURL Custom Name of the group as String
+ * @param {function} [callback] Called with `err` (String) and `info` (Object) parameters on completion
+ */
+module.exports.groupUrlToFullInfo = (groupURL, callback) => {
+    getXMLinfo(`https://steamcommunity.com/groups/${groupURL}/memberslistxml`)
+        .then(res => {
+            callback(null, res)
+        })
+        .catch(err => {
+            callback(err, null); //callback error
         })
 }
