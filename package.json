@@ -1,6 +1,6 @@
 {
   "name": "steamid-resolver",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "NPM library to get steamids of profile links/names and the other way around",
   "main": "index.js",
   "scripts": {
