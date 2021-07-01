@@ -67,11 +67,35 @@ function getXMLinfo(url) {
 
 
 /**
- * Get the custom profile url of a user as String by their steamID64
- * @param {String} steamID64 steamID64 of the user
+ * Internal function to process the id parameter in order to also accept urls from the user
+ * @param {String} param The parameter which the user provided
+ * @returns {String} The processed parameter
+ */
+function processParameter(param) {
+    if (debug) console.log(`[steamid-resolver] Processing parameter: ${param}`)
+
+    if (param.includes("steamcommunity.com/")) { //check if full url was provided
+        if (debug) console.log(`[steamid-resolver] Parameter is an url. Splitting...`)
+        var split = param.split("/")
+
+        if (debug) console.log(`[steamid-resolver] Split url and returning this: ${split[split.length - 1]}`)
+        return split[split.length - 1]
+
+    } else { //if the user already provided only the important part then just return the parameter again
+        if (debug) console.log(`[steamid-resolver] Parameter is not an url. Returning unmodified parameter...`)
+        return param;
+    }
+}
+
+
+/**
+ * Get the custom profile url of a user as String by their steamID64 or full URL
+ * @param {String} steamID64 steamID64 or full URL of the user
  * @param {function} [callback] Called with `err` (String) and `customURL` (String) parameters on completion
  */
 module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
+    var steamID64 = processParameter(steamID64)
+
     getXMLinfo(`https://steamcommunity.com/profiles/${steamID64}`)
         .then(res => {
             callback(null, res.customURL[0]) //callback customURL when we are done (which is somehow in an array(?))
@@ -82,11 +106,13 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
 }
 
 /**
- * Get the steamID64 of a user as String by their custom profile url
- * @param {String} customID Custom ID of the user as String
+ * Get the steamID64 of a user as String by their custom profile url or full URL
+ * @param {String} customID Custom ID or full URL of the user as String
  * @param {function} [callback] Called with `err` (String) and `steamID64` (String) parameters on completion
  */
 module.exports.customUrlTosteamID64 = (customID, callback) => {
+    var customID = processParameter(customID)
+
     getXMLinfo(`https://steamcommunity.com/id/${customID}`)
         .then(res => {
             callback(null, res.steamID64[0])
@@ -97,11 +123,13 @@ module.exports.customUrlTosteamID64 = (customID, callback) => {
 }
 
 /**
- * Get the full information of a user as Object by their steamID64
- * @param {String} steamID64 steamID64 of the user as String
+ * Get the full information of a user as Object by their steamID64 or full URL
+ * @param {String} steamID64 steamID64 or full URL of the user as String
  * @param {function} [callback] Called with `err` (String) and `info` (Object) parameters on completion
  */
 module.exports.steamID64ToFullInfo = (steamID64, callback) => {
+    var steamID64 = processParameter(steamID64)
+
     getXMLinfo(`https://steamcommunity.com/profiles/${steamID64}`)
         .then(res => {
             callback(null, res) //callback full object
@@ -112,11 +140,13 @@ module.exports.steamID64ToFullInfo = (steamID64, callback) => {
 }
 
 /**
- * Get the full information of a user as Object by their custom profile url
- * @param {String} customID Custom ID of the user as String
+ * Get the full information of a user as Object by their custom profile url or full URL
+ * @param {String} customID Custom ID or full URL of the user as String
  * @param {function} [callback] Called with `err` (String) and `info` (Object) parameters on completion
  */
 module.exports.customUrlToFullInfo = (customID, callback) => {
+    var customID = processParameter(customID)
+
     getXMLinfo(`https://steamcommunity.com/id/${customID}`)
         .then(res => {
             callback(null, res)
@@ -127,11 +157,13 @@ module.exports.customUrlToFullInfo = (customID, callback) => {
 }
 
 /**
- * Get the group64ID of a group as String by groupURL (just the name)
- * @param {String} groupURL Custom Name of the group as String
+ * Get the group64ID of a group as String by groupURL or full URL
+ * @param {String} groupURL Custom Name of the group or full URL as String
  * @param @param {function} [callback] Called with `err` (String) and `groupID64` (String) parameters on completion
  */
 module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
+    var groupURL = processParameter(groupURL)
+
     getXMLinfo(`https://steamcommunity.com/groups/${groupURL}/memberslistxml`)
         .then(res => {
             callback(null, res.groupID64[0]) //callback groupID64
@@ -142,11 +174,13 @@ module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
 }
 
 /**
- * Get the full information of a group as Object by groupURL
- * @param {String} groupURL Custom Name of the group as String
+ * Get the full information of a group as Object by groupURL or full URL
+ * @param {String} groupURL Custom Name of the group or full URL as String
  * @param {function} [callback] Called with `err` (String) and `info` (Object) parameters on completion
  */
 module.exports.groupUrlToFullInfo = (groupURL, callback) => {
+    var groupURL = processParameter(groupURL)
+
     getXMLinfo(`https://steamcommunity.com/groups/${groupURL}/memberslistxml`)
         .then(res => {
             callback(null, res)
