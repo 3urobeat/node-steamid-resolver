@@ -26,6 +26,11 @@ function getXMLinfo(url) {
                 result.on('end', () => { //finished request
                     if (debug) console.log(`[steamid-resolver] Successfully retrieved information from Steam.`)
 
+                    if (!String(output).includes("<?xml") && !String(output).includes("<error>")) { //Check if output is steam group xml data before parsing it in order to provide correct group not found message
+                        reject("The specified group could not be found.")
+                        return;
+                    }
+
                     new xml2js.Parser().parseString(output, function(err, parsed) { //parse the XML data from Steam into an object
                         if (err) { //check for parsing error
                             if (debug) console.log(`[steamid-resolver] Failed to parse XML info: ${err}`)
