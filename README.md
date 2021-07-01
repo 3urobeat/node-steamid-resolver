@@ -15,37 +15,37 @@ var steamidResolver = require("steamid-resolver")
 
 ## Functions  
 ### steamID64ToCustomUrl(steamID64, callback)  
-- `steamID64` - The steamID64 as String of the user you want to get the customURL of. Example: `"76561198260031749"`  
+- `steamID64` - steamID64 or full URL of the user you want to get the customURL of. Example: `"76561198260031749"` or `"https://steamcommunity.com/profiles/76561198260031749"`  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `customURL` - The customURL of the user or `null` on failure. Example on succes: `"3urobeat"`  
 
 ### customUrlTosteamID64(customURL, callback)  
-- `customURL` - The customURL as String of the user you want to get the steamID64 of. Example: `"3urobeat"` (coming from `https://steamcommunity.com/id/3urobeat`)  
+- `customURL` - customURL or full URL of the user you want to get the steamID64 of. Example: `"3urobeat"` or `"https://steamcommunity.com/id/3urobeat"`  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `steamID64` - The steamID64 of the user or `null` on failure. Example on succes: `"76561198260031749"`  
 
 ### steamID64ToFullInfo(customURL, callback)  
-- `customURL` - The steamID64 as String of the user you want to get all information of. Example: `"76561198260031749"`  
+- `customURL` - steamID64 or full URL of the user you want to get all information of.  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1)  
 
 ### customUrlToFullInfo(customURL, callback)  
-- `customURL` - The customURL as String of the user you want to get all information of. Example: `"3urobeat"` (coming from `https://steamcommunity.com/id/3urobeat`)  
+- `customURL` - customURL or full URL of the user you want to get all information of.  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/id/3urobeat?xml=1) 
 
 ### groupUrlToGroupID64(groupURL, callback)  
-- `groupURL` - The groupURL as String of the group you want to get the groupID64 of. Example: `"3urobeatGroup"` (coming from `https://steamcommunity.com/groups/3urobeatGroup`)  
+- `groupURL` - groupURL or full URL of the group you want to get the groupID64 of. Example: `"3urobeatGroup"` or `"https://steamcommunity.com/groups/3urobeatGroup"`  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `groupID64` - The groupID64 of the group or `null` on failure. Example on succes: `"103582791464712227"`  
 
 ### groupUrlToFullInfo(groupURL, callback)  
-- `groupURL` - The groupURL as String of the group you want to get all information of. Example: `"3urobeatGroup"` (coming from `https://steamcommunity.com/groups/3urobeatGroup`)  
+- `groupURL` - groupURL or full URL of the group you want to get all information of.  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `info` - The full information of the group as object or `null` on failure. Example: [Imagine this but as object](https://steamcommunity.com/groups/3urobeatGroup/memberslistxml?xml=1) 
