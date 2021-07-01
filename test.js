@@ -12,6 +12,16 @@ steamidResolver.steamID64ToCustomUrl("76561198260031749", (err, customURL) => {
     }
 })
 
+steamidResolver.steamID64ToCustomUrl("https://steamcommunity.com/profiles/76561198260031749", (err, customURL) => {
+    if (err) return console.log("steamID64ToCustomUrl with full URL error: " + err)
+    
+    if (customURL == "3urobeat") { //kind of stupid to rely this test on me not changing my my customURL but also why should I ever
+        console.log("steamID64ToCustomUrl with full URL ok.")
+    } else {
+        console.log("steamID64ToCustomUrl with full URL error!")
+    }
+})
+
 steamidResolver.customUrlTosteamID64("3urobeat", (err, steamID64) => {
     if (err) return console.log("customUrlTosteamID64 error: " + err)
     
@@ -19,6 +29,16 @@ steamidResolver.customUrlTosteamID64("3urobeat", (err, steamID64) => {
         console.log("customUrlTosteamID64 ok.")
     } else {
         console.log("customUrlTosteamID64 error!")
+    }
+})
+
+steamidResolver.customUrlTosteamID64("https://steamcommunity.com/id/3urobeat", (err, steamID64) => {
+    if (err) return console.log("customUrlTosteamID64 with full URL error: " + err)
+    
+    if (steamID64 == "76561198260031749") {
+        console.log("customUrlTosteamID64 with full URL ok.")
+    } else {
+        console.log("customUrlTosteamID64 with full URL error!")
     }
 })
 
@@ -49,6 +69,16 @@ steamidResolver.groupUrlToGroupID64("3urobeatGroup", (err, groupID64) => {
         console.log("groupUrlToGroupID64 ok.")
     } else {
         console.log("groupUrlToGroupID64 error!")
+    }
+})
+
+steamidResolver.groupUrlToGroupID64("https://steamcommunity.com/groups/3urobeatGroup", (err, groupID64) => {
+    if (err) return console.log("groupUrlToGroupID64 with full URL error: " + err)
+    
+    if (groupID64 == "103582791464712227") {
+        console.log("groupUrlToGroupID64 with full URL ok.")
+    } else {
+        console.log("groupUrlToGroupID64 with full URL error!")
     }
 })
 
