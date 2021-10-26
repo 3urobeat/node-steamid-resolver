@@ -83,6 +83,9 @@ function processParameter(param) {
         if (debug) console.log(`[steamid-resolver] Parameter is an url. Splitting...`)
         var split = param.split("/")
 
+        if (debug) console.log(`[steamid-resolver] Checking & removing trailing slash...`)
+        if (split[split.length - 1] == "") split.pop() //remove trailing slash (which is now a space because of split("/"))
+
         if (debug) console.log(`[steamid-resolver] Split url and returning this: ${split[split.length - 1]}`)
         return split[split.length - 1]
 
