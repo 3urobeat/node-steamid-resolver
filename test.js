@@ -1,93 +1,43 @@
 //I hope tests are ok this way? No idea, never added tests to my repos but this seems to make somewhat sense.
 
+function response(err, callback, funcname, testval) {
+    if (err) return console.log(`${funcname} error: ${err}`)
+    
+    if (callback == testval) { //kind of stupid to rely this test on me not changing my my customURL but also why should I ever
+        console.log(`${funcname} ok.`)
+    } else {
+        console.log(`${funcname} error!`)
+    }
+}
+
+function responseFull(err, callback, funcname, type, testval1, testval2) {
+    if (err) return console.log(`${funcname} error: ${err}`)
+    
+    if (type == "profile") {
+        if (Object.keys(callback).length > 5 && callback.customURL[0] == testval1 && callback.steamID64[0] == testval2) console.log(`${funcname} ok.`)
+            else console.log(`${funcname} error!`)
+    } else if (type == "group") {
+        if (Object.keys(callback).length > 5 && callback.groupDetails[0].groupURL[0] == testval1 && callback.groupID64[0] == testval2) console.log(`${funcname} ok.`)
+            else console.log(`${funcname} error!`)
+    }
+}
+
 var steamidResolver = require("./index.js")
 
-steamidResolver.steamID64ToCustomUrl("76561198260031749", (err, customURL) => {
-    if (err) return console.log("steamID64ToCustomUrl error: " + err)
-    
-    if (customURL == "3urobeat") { //kind of stupid to rely this test on me not changing my my customURL but also why should I ever
-        console.log("steamID64ToCustomUrl ok.")
-    } else {
-        console.log("steamID64ToCustomUrl error!")
-    }
-})
 
-steamidResolver.steamID64ToCustomUrl("https://steamcommunity.com/profiles/76561198260031749", (err, customURL) => {
-    if (err) return console.log("steamID64ToCustomUrl with full URL error: " + err)
-    
-    if (customURL == "3urobeat") { //kind of stupid to rely this test on me not changing my my customURL but also why should I ever
-        console.log("steamID64ToCustomUrl with full URL ok.")
-    } else {
-        console.log("steamID64ToCustomUrl with full URL error!")
-    }
-})
+steamidResolver.steamID64ToCustomUrl("76561198260031749", (err, customURL) => response(err, customURL, "steamID64ToCustomUrl", "3urobeat"))
+steamidResolver.steamID64ToCustomUrl("https://steamcommunity.com/profiles/76561198260031749", (err, customURL) => response(err, customURL, "steamID64ToCustomUrl", "3urobeat"))
+steamidResolver.steamID64ToCustomUrl("https://steamcommunity.com/profiles/76561198260031749/", (err, customURL) => response(err, customURL, "steamID64ToCustomUrl", "3urobeat")) //traling slash test
 
-steamidResolver.customUrlTosteamID64("3urobeat", (err, steamID64) => {
-    if (err) return console.log("customUrlTosteamID64 error: " + err)
-    
-    if (steamID64 == "76561198260031749") {
-        console.log("customUrlTosteamID64 ok.")
-    } else {
-        console.log("customUrlTosteamID64 error!")
-    }
-})
+steamidResolver.customUrlTosteamID64("3urobeat", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
+steamidResolver.customUrlTosteamID64("https://steamcommunity.com/id/3urobeat", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
 
-steamidResolver.customUrlTosteamID64("https://steamcommunity.com/id/3urobeat", (err, steamID64) => {
-    if (err) return console.log("customUrlTosteamID64 with full URL error: " + err)
-    
-    if (steamID64 == "76561198260031749") {
-        console.log("customUrlTosteamID64 with full URL ok.")
-    } else {
-        console.log("customUrlTosteamID64 with full URL error!")
-    }
-})
+steamidResolver.steamID64ToFullInfo("76561198260031749", (err, info) => responseFull(err, info, "steamID64ToFullInfo", "profile", "3urobeat", "76561198260031749"))
 
-steamidResolver.steamID64ToFullInfo("76561198260031749", (err, info) => {
-    if (err) return console.log("steamID64ToFullInfo error: " + err)
-    
-    if (Object.keys(info).length > 5 && info.customURL[0] == "3urobeat" && info.steamID64[0] == "76561198260031749") {
-        console.log("steamID64ToFullInfo ok.")
-    } else {
-        console.log("steamID64ToFullInfo error!")
-    }
-})
+steamidResolver.customUrlToFullInfo("3urobeat", (err, info) => responseFull(err, info, "customUrlToFullInfo", "profile", "3urobeat", "76561198260031749"))
 
-steamidResolver.customUrlToFullInfo("3urobeat", (err, info) => {
-    if (err) return console.log("customUrlToFullInfo error: " + err)
-    
-    if (Object.keys(info).length > 5 && info.customURL[0] == "3urobeat" && info.steamID64[0] == "76561198260031749") {
-        console.log("customUrlToFullInfo ok.")
-    } else {
-        console.log("customUrlToFullInfo error!")
-    }
-})
+steamidResolver.groupUrlToGroupID64("3urobeatGroup", (err, groupID64) => response(err, groupID64, "groupUrlToGroupID64", "103582791464712227"))
+steamidResolver.groupUrlToGroupID64("https://steamcommunity.com/groups/3urobeatGroup", (err, groupID64) => response(err, groupID64, "groupUrlToGroupID64", "103582791464712227"))
+steamidResolver.groupUrlToGroupID64("https://steamcommunity.com/groups/3urobeatGroup/", (err, groupID64) => response(err, groupID64, "groupUrlToGroupID64", "103582791464712227")) //traling slash test
 
-steamidResolver.groupUrlToGroupID64("3urobeatGroup", (err, groupID64) => {
-    if (err) return console.log("groupUrlToGroupID64 error: " + err)
-    
-    if (groupID64 == "103582791464712227") {
-        console.log("groupUrlToGroupID64 ok.")
-    } else {
-        console.log("groupUrlToGroupID64 error!")
-    }
-})
-
-steamidResolver.groupUrlToGroupID64("https://steamcommunity.com/groups/3urobeatGroup", (err, groupID64) => {
-    if (err) return console.log("groupUrlToGroupID64 with full URL error: " + err)
-    
-    if (groupID64 == "103582791464712227") {
-        console.log("groupUrlToGroupID64 with full URL ok.")
-    } else {
-        console.log("groupUrlToGroupID64 with full URL error!")
-    }
-})
-
-steamidResolver.groupUrlToFullInfo("3urobeatGroup", (err, info) => {
-    if (err) return console.log("groupUrlToFullInfo error: " + err)
-    
-    if (Object.keys(info).length > 5 && info.groupDetails[0].groupURL[0] == "3urobeatGroup" && info.groupID64[0] == "103582791464712227") {
-        console.log("groupUrlToFullInfo ok.")
-    } else {
-        console.log("groupUrlToFullInfo error!")
-    }
-})
+steamidResolver.groupUrlToFullInfo("3urobeatGroup", (err, info) => responseFull(err, info, "groupUrlToFullInfo", "group", "3urobeatGroup", "103582791464712227"))
