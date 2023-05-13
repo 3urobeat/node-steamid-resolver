@@ -52,9 +52,9 @@ steamidResolver.steamID64ToCustomUrl("76561198260031749", (err, customURL) => re
 steamidResolver.steamID64ToCustomUrl("https://steamcommunity.com/profiles/76561198260031749", (err, customURL) => response(err, customURL, "steamID64ToCustomUrl", "3urobeat"))
 steamidResolver.steamID64ToCustomUrl("https://steamcommunity.com/profiles/76561198260031749/", (err, customURL) => response(err, customURL, "steamID64ToCustomUrl", "3urobeat")) //traling slash test
 
-steamidResolver.customUrlTosteamID64("3urobeat", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
-steamidResolver.customUrlTosteamID64("https://steamcommunity.com/id/3urobeat", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
-steamidResolver.customUrlTosteamID64("https://steamcommunity.com/id/3urobeat/", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
+steamidResolver.customUrlToSteamID64("3urobeat", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
+steamidResolver.customUrlToSteamID64("https://steamcommunity.com/id/3urobeat", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
+steamidResolver.customUrlToSteamID64("https://steamcommunity.com/id/3urobeat/", (err, steamID64) => response(err, steamID64, "customUrlTosteamID64", "76561198260031749"))
 
 steamidResolver.steamID64ToFullInfo("76561198260031749", (err, info) => responseFull(err, info, "steamID64ToFullInfo", "profile", "3urobeat", "76561198260031749"))
 steamidResolver.steamID64ToFullInfo("https://steamcommunity.com/profiles/76561198260031749", (err, info) => responseFull(err, info, "steamID64ToFullInfo", "profile", "3urobeat", "76561198260031749"))
