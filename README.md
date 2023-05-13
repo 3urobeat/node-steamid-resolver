@@ -20,7 +20,7 @@ var steamidResolver = require("steamid-resolver")
     - `err` - A String detailing the reason of the failure or `null` on success
     - `customURL` - The customURL of the user or `null` on failure. Example on success: `"3urobeat"`  
 
-### customUrlTosteamID64(customURL, callback)  
+### customUrlToSteamID64(customURL, callback)  
 - `customURL` - customURL or full URL of the user you want to get the steamID64 of. Example: `"3urobeat"` or `"https://steamcommunity.com/id/3urobeat"`  
 - `callback` - Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
