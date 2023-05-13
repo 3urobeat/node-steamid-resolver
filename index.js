@@ -4,7 +4,7 @@
  * Created Date: 05.04.2023 19:04:56
  * Author: 3urobeat
  * 
- * Last Modified: 13.05.2023 23:11:22
+ * Last Modified: 13.05.2023 23:15:22
  * Modified By: 3urobeat
  * 
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
@@ -40,7 +40,7 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
  * @param {String} customID Custom ID or full URL of the user as String
  * @param {function} [callback] Called with `err` (String) and `steamID64` (String) parameters on completion
  */
-module.exports.customUrlTosteamID64 = (customID, callback) => {
+module.exports.customUrlToSteamID64 = (customID, callback) => {
     customID = _parseParam(customID);
 
     _parseXML(`https://steamcommunity.com/id/${customID}`)
