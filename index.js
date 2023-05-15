@@ -4,7 +4,7 @@
  * Created Date: 05.04.2023 19:04:56
  * Author: 3urobeat
  * 
- * Last Modified: 13.05.2023 23:15:22
+ * Last Modified: 15.05.2023 23:49:38
  * Modified By: 3urobeat
  * 
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
@@ -102,4 +102,32 @@ module.exports.groupUrlToFullInfo = (groupURL, callback) => {
     _parseXML(`https://steamcommunity.com/groups/${groupURL}/memberslistxml`)
         .then(res => callback(null, res))
         .catch(err => callback(err, null));
+};
+
+
+/**
+ * Checks if the provided ID or full URL points to a valid sharedfile
+ * @param {String} input Sharedfile ID of full URL
+ * @param {function} [callback] Called with `err` (String) and `isValid` (Boolean) parameters on completion
+ */
+module.exports.isValidSharedfileID = (input, callback) => {
+    // Precede input with URL if only the ID was provided
+    if (!input.includes("steamcommunity.com")) input = "https://steamcommunity.com/sharedfiles/filedetails/?id=" + input;
+
+    try {
+        let output = "";
+
+        require("https").get(input, (res) => {
+            res.on('data', (chunk) => output += chunk); // Append each chunk to output
+
+            res.on("end", () => {
+                // Check if output contains an error msg
+                let isInvalid = output.includes("There was a problem accessing the item") || output.includes("That item does not exist");
+
+                callback(null, !isInvalid);
+            });
+        });
+    } catch (err) {
+        callback(err, null);
+    }
 };
