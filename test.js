@@ -1,6 +1,6 @@
-//I hope tests are ok this way? No idea, never added tests to my repos but this seems to make somewhat sense.
+// I hope tests are ok this way? No idea, never added tests to my repos but this seems to make somewhat sense.
 
-var checksAmount = 13; //the amount of checks below to be able to check if all tests are done
+const checksAmount = 13; // The amount of checks below to be able to check if all tests are done
 
 var okAmount       = 0;
 var errAmount      = 0;

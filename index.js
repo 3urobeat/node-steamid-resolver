@@ -3,12 +3,12 @@
  * Project: steamid-resolver
  * Created Date: 05.04.2023 19:04:56
  * Author: 3urobeat
- * 
- * Last Modified: 16.05.2023 18:59:51
+ *
+ * Last Modified: 16.05.2023 19:23:20
  * Modified By: 3urobeat
- * 
+ *
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
- * 
+ *
  * Licensed under the MIT license: https://opensource.org/licenses/MIT
  * Permission is granted to use, copy, modify, and redistribute the work.
  * Full license information available in the project LICENSE file.
@@ -155,19 +155,19 @@ module.exports.groupUrlToFullInfo = (groupURL, callback = () => {}) => {
 
 /**
  * Checks if the provided ID or full URL points to a valid sharedfile
- * @param {String} input Sharedfile ID of full URL
+ * @param {String} sharedfileID Sharedfile ID or full sharedfile URL
  * @param {function} [callback] Optional: Called with `err` (String) and `isValid` (Boolean) parameters on completion
  */
-module.exports.isValidSharedfileID = (input, callback = () => {}) => {
+module.exports.isValidSharedfileID = (sharedfileID, callback = () => {}) => {
     return new Promise((resolve, reject) => {
-        // Precede input with URL if only the ID was provided
-        if (!input.includes("steamcommunity.com")) input = "https://steamcommunity.com/sharedfiles/filedetails/?id=" + input;
+        // Precede sharedfileID with URL if only the ID was provided
+        if (!sharedfileID.includes("steamcommunity.com")) sharedfileID = "https://steamcommunity.com/sharedfiles/filedetails/?id=" + sharedfileID;
 
         try {
             let output = "";
 
-            require("https").get(input, (res) => {
-                res.on('data', (chunk) => output += chunk); // Append each chunk to output
+            require("https").get(sharedfileID, (res) => {
+                res.on("data", (chunk) => output += chunk); // Append each chunk to output
 
                 res.on("end", () => {
                     // Check if output contains an error msg
