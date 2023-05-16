@@ -3,12 +3,12 @@
  * Project: steamid-resolver
  * Created Date: 13.05.2023 22:30:59
  * Author: 3urobeat
- * 
- * Last Modified: 13.05.2023 23:08:51
+ *
+ * Last Modified: 16.05.2023 19:25:53
  * Modified By: 3urobeat
- * 
+ *
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
- * 
+ *
  * Licensed under the MIT license: https://opensource.org/licenses/MIT
  * Permission is granted to use, copy, modify, and redistribute the work.
  * Full license information available in the project LICENSE file.
@@ -41,11 +41,11 @@ module.exports._parseXML = (url) => {
 
             // Get XML data from Steam
             https.get(`${url}?xml=1`, (result) => {
-                result.on('data', (chunk) => output += chunk); // Add each chunk of incoming data to output
+                result.on("data", (chunk) => output += chunk); // Add each chunk of incoming data to output
 
                 // Start parsing response when finished
-                result.on('end', () => {
-                    log(`[steamid-resolver] Successfully retrieved information from Steam.`);
+                result.on("end", () => {
+                    log("[steamid-resolver] Successfully retrieved information from Steam.");
 
                     // Check if output is steam group xml data before parsing it in order to provide correct group not found message
                     if (!String(output).includes("<?xml") && !String(output).includes("<error>")) {
@@ -87,14 +87,14 @@ module.exports._parseXML = (url) => {
                             return;
                         }
 
-                    })
-                }) 
-            })
+                    });
+                });
+            });
         } catch (err) {
             log("[steamid-resolver] No response from Steam or other https error! Error: " + err);
 
             reject("Error trying to reach Steam: " + err); // TODO: Also check for status code to see if Steam is down
             return;
         }
-    })
+    });
 };

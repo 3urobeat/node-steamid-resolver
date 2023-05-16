@@ -3,12 +3,12 @@
  * Project: steamid-resolver
  * Created Date: 13.05.2023 22:32:11
  * Author: 3urobeat
- * 
- * Last Modified: 13.05.2023 23:13:42
+ *
+ * Last Modified: 16.05.2023 19:25:20
  * Modified By: 3urobeat
- * 
+ *
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
- * 
+ *
  * Licensed under the MIT license: https://opensource.org/licenses/MIT
  * Permission is granted to use, copy, modify, and redistribute the work.
  * Full license information available in the project LICENSE file.
@@ -32,10 +32,10 @@ module.exports._parseParam = (param) => {
     log(`[steamid-resolver] Processing parameter: ${param}`);
 
     if (param.includes("steamcommunity.com/")) { // Check if full URL was provided
-        log(`[steamid-resolver] Parameter is an url. Splitting...`);
-        var split = param.split("/");
+        log("[steamid-resolver] Parameter is an url. Splitting...");
+        let split = param.split("/");
 
-        log(`[steamid-resolver] Checking & removing trailing slash...`);
+        log("[steamid-resolver] Checking & removing trailing slash...");
         if (split[split.length - 1] == "") split.pop(); // Remove trailing slash (which is now a space because of split("/"))
 
         log(`[steamid-resolver] Split url and returning this: ${split[split.length - 1]}`);
@@ -43,7 +43,7 @@ module.exports._parseParam = (param) => {
 
     } else { // Return parameter if user already provided only the important part
 
-        log(`[steamid-resolver] Parameter is not an url. Returning unmodified parameter...`);
+        log("[steamid-resolver] Parameter is not an url. Returning unmodified parameter...");
         return param;
     }
 };
