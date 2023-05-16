@@ -1,6 +1,7 @@
 # node-steamid-resolver
-NPM library to get steamIDs from profile or group links and the other way around.  
-It can also return you all information Steam knows [about a profile](https://steamcommunity.com/id/3urobeat?xml=1) in a nice object format and check if a sharedfile ID (Screenshots, Artworks & Guides) is valid or not.  
+NPM library to get steamIDs from profile or group links, the other way around and validate sharedfileIDs.  
+Sharedfile IDs are used to uniquely identify Screenshots, Artworks and Guides on Steam.  
+It can also return you all information Steam knows [about a profile](https://steamcommunity.com/id/3urobeat?xml=1) in a nice object format.  
 
 &nbsp;
 
