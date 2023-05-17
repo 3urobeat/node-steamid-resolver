@@ -21,6 +21,7 @@ const steamIdResolver = require("steamid-resolver")
 ## Functions  
 All functions support both Promises and callbacks!  
 This means you can either use `await`, `.then(response => {})` & `.catch(err => {})` or pass a callback function `(err, response) => {}` as parameter.  
+Note: You cannot use both callbacks and `.catch()` as a Promise is only rejected when no callback was passed. This prevents any `UnhandledPromiseRejection` errors crashing your process.  
 
 &nbsp;
 

@@ -4,7 +4,7 @@
  * Created Date: 05.04.2023 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 16.05.2023 19:23:20
+ * Last Modified: 17.05.2023 15:33:09
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
@@ -26,8 +26,12 @@ const { _parseXML }   = require("./helpers/parseXML.js");
  * @param {String} steamID64 steamID64 or full URL of the user
  * @param {function} [callback] Optional: Called with `err` (String) and `customURL` (String) parameters on completion
  */
-module.exports.steamID64ToCustomUrl = (steamID64, callback = () => {}) => {
+module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
     return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
         steamID64 = _parseParam(steamID64);
 
         _parseXML(`https://steamcommunity.com/profiles/${steamID64}`)
@@ -48,8 +52,12 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback = () => {}) => {
  * @param {String} customID Custom ID or full URL of the user as String
  * @param {function} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
  */
-module.exports.customUrlToSteamID64 = (customID, callback = () => {}) => {
+module.exports.customUrlToSteamID64 = (customID, callback) => {
     return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
         customID = _parseParam(customID);
 
         _parseXML(`https://steamcommunity.com/id/${customID}`)
@@ -70,8 +78,12 @@ module.exports.customUrlToSteamID64 = (customID, callback = () => {}) => {
  * @param {String} steamID64 steamID64 or full URL of the user as String
  * @param {function} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  */
-module.exports.steamID64ToFullInfo = (steamID64, callback = () => {}) => {
+module.exports.steamID64ToFullInfo = (steamID64, callback) => {
     return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
         steamID64 = _parseParam(steamID64);
 
         _parseXML(`https://steamcommunity.com/profiles/${steamID64}`)
@@ -92,8 +104,12 @@ module.exports.steamID64ToFullInfo = (steamID64, callback = () => {}) => {
  * @param {String} customID Custom ID or full URL of the user as String
  * @param {function} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  */
-module.exports.customUrlToFullInfo = (customID, callback = () => {}) => {
+module.exports.customUrlToFullInfo = (customID, callback) => {
     return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
         customID = _parseParam(customID);
 
         _parseXML(`https://steamcommunity.com/id/${customID}`)
@@ -114,8 +130,12 @@ module.exports.customUrlToFullInfo = (customID, callback = () => {}) => {
  * @param {String} groupURL Custom Name of the group or full URL as String
  * @param @param {function} [callback] Optional: Called with `err` (String) and `groupID64` (String) parameters on completion
  */
-module.exports.groupUrlToGroupID64 = (groupURL, callback = () => {}) => {
+module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
     return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
         groupURL = _parseParam(groupURL);
 
         _parseXML(`https://steamcommunity.com/groups/${groupURL}/memberslistxml`)
@@ -136,8 +156,12 @@ module.exports.groupUrlToGroupID64 = (groupURL, callback = () => {}) => {
  * @param {String} groupURL Custom Name of the group or full URL as String
  * @param {function} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  */
-module.exports.groupUrlToFullInfo = (groupURL, callback = () => {}) => {
+module.exports.groupUrlToFullInfo = (groupURL, callback) => {
     return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
         groupURL = _parseParam(groupURL);
 
         _parseXML(`https://steamcommunity.com/groups/${groupURL}/memberslistxml`)
@@ -158,8 +182,12 @@ module.exports.groupUrlToFullInfo = (groupURL, callback = () => {}) => {
  * @param {String} sharedfileID Sharedfile ID or full sharedfile URL
  * @param {function} [callback] Optional: Called with `err` (String) and `isValid` (Boolean) parameters on completion
  */
-module.exports.isValidSharedfileID = (sharedfileID, callback = () => {}) => {
+module.exports.isValidSharedfileID = (sharedfileID, callback) => {
     return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
         // Precede sharedfileID with URL if only the ID was provided
         if (!sharedfileID.includes("steamcommunity.com")) sharedfileID = "https://steamcommunity.com/sharedfiles/filedetails/?id=" + sharedfileID;
 
