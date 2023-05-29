@@ -37,8 +37,8 @@ Note: You cannot use both callbacks and `.catch()` as a Promise is only rejected
     - `err` - A String detailing the reason of the failure or `null` on success
     - `steamID64` - The steamID64 of the user or `null` on failure. Example on success: `"76561198260031749"`  
 
-### steamID64ToFullInfo(customURL, callback)  
-- `customURL` - steamID64 or full URL of the user you want to get all information of.  
+### steamID64ToFullInfo(steamID64, callback)  
+- `steamID64` - steamID64 or full URL of the user you want to get all information of.  
 - `callback` - Optional: Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as an object](https://steamcommunity.com/id/3urobeat?xml=1)  
