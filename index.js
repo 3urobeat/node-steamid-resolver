@@ -4,7 +4,7 @@
  * Created Date: 05.04.2023 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 17.05.2023 15:33:09
+ * Last Modified: 30.05.2023 13:40:05
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
@@ -21,10 +21,48 @@ const { _parseParam } = require("./helpers/parseParam.js");
 const { _parseXML }   = require("./helpers/parseXML.js");
 
 
+// Type definitions for full information objects
+
+/**
+ * Full profile information object returned by Steam. Notes: `mostPlayedGames` had 4 elements in testing. `groups` contains full information of the first 3 groups, all following groups only have '$' and 'groupID64' populated.
+ * @typedef fullProfileInfoObject
+ * @type {{
+ *      steamID64: [string], steamID: [string], onlineState: [string], stateMessage: [string], privacyState: [string], visibilityState: [string], avatarIcon: [string], avatarMedium: [string], avatarFull: [string], vacBanned: [string],
+ *      tradeBanState: [string], isLimitedAccount: [string], customURL: [string], memberSince: [string], steamRating: [string], hoursPlayed2Wk: [string], headline: [string], location: [string],realname: [string], summary: [string],
+ *      mostPlayedGames: [
+ *          { mostPlayedGame: [
+ *              { gameName: [string], gameLink: [string], gameIcon: [string], gameLogo: [string], gameLogoSmall: [string], hoursPlayed: [string], hoursOnRecord: [string], statsName: [string] },
+ *              { gameName: [string], gameLink: [string], gameIcon: [string], gameLogo: [string], gameLogoSmall: [string], hoursPlayed: [string], hoursOnRecord: [string], statsName: [string] },
+ *              { gameName: [string], gameLink: [string], gameIcon: [string], gameLogo: [string], gameLogoSmall: [string], hoursPlayed: [string], hoursOnRecord: [string], statsName: [string] },
+ *              { gameName: [string], gameLink: [string], gameIcon: [string], gameLogo: [string], gameLogoSmall: [string], hoursPlayed: [string], hoursOnRecord: [string], statsName: [string] }
+ *          ] }
+ *      ],
+ *      groups: [
+ *          { group: Array<{ "$": { isPrimary: string }, groupID64: [string], groupName: [string], groupURL: [string], headline: [string], summary: [string], avatarIcon: [string], avatarMedium: [string], avatarFull: [string], memberCount: [string], membersInChat: [string], membersInGame: [string], membersOnline: [string] }> }
+ *      ]
+ * }}
+ */
+
+/**
+ * Full group information object returned by Steam.
+ * @typedef fullGroupInfoObject
+ * @type {{
+ *      groupID64: [string],
+ *      groupDetails: [
+ *          { groupName: [string], groupURL: [string], headline: [string], summary: [string], avatarIcon: [string], avatarMedium: [string], avatarFull: [string], memberCount: [string], membersInChat: [string], membersInGame: [string], membersOnline: [string] }
+ *      ],
+ *      memberCount: [string], totalPages: [string], currentPage: [string], startingMember: [string], nextPageLink: [string],
+ *      members: [
+ *          { steamID64: Array<string> }
+ *      ]
+ * }}
+ */
+
+
 /**
  * Get the custom profile url of a user as String by their steamID64 or full URL
  * @param {String} steamID64 steamID64 or full URL of the user
- * @param {function} [callback] Optional: Called with `err` (String) and `customURL` (String) parameters on completion
+ * @param {function(string|null, string|null)} [callback] Optional: Called with `err` (String) and `customURL` (String) parameters on completion
  */
 module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
     return new Promise((resolve, reject) => {
@@ -50,7 +88,7 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
 /**
  * Get the steamID64 of a user as String by their custom profile url or full URL
  * @param {String} customID Custom ID or full URL of the user as String
- * @param {function} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
+ * @param {function(string|null, string|null)} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
  */
 module.exports.customUrlToSteamID64 = (customID, callback) => {
     return new Promise((resolve, reject) => {
@@ -76,7 +114,7 @@ module.exports.customUrlToSteamID64 = (customID, callback) => {
 /**
  * Get the full information of a user as Object by their steamID64 or full URL
  * @param {String} steamID64 steamID64 or full URL of the user as String
- * @param {function} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
+ * @param {function(string|null, fullProfileInfoObject|null)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  */
 module.exports.steamID64ToFullInfo = (steamID64, callback) => {
     return new Promise((resolve, reject) => {
@@ -102,7 +140,7 @@ module.exports.steamID64ToFullInfo = (steamID64, callback) => {
 /**
  * Get the full information of a user as Object by their custom profile url or full URL
  * @param {String} customID Custom ID or full URL of the user as String
- * @param {function} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
+ * @param {function(string|null, fullProfileInfoObject|null)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  */
 module.exports.customUrlToFullInfo = (customID, callback) => {
     return new Promise((resolve, reject) => {
@@ -128,7 +166,7 @@ module.exports.customUrlToFullInfo = (customID, callback) => {
 /**
  * Get the group64ID of a group as String by groupURL or full URL
  * @param {String} groupURL Custom Name of the group or full URL as String
- * @param @param {function} [callback] Optional: Called with `err` (String) and `groupID64` (String) parameters on completion
+ * @param {function(string|null, string|null)} [callback] Optional: Called with `err` (String) and `groupID64` (String) parameters on completion
  */
 module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
     return new Promise((resolve, reject) => {
@@ -154,7 +192,7 @@ module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
 /**
  * Get the full information of a group as Object by groupURL or full URL
  * @param {String} groupURL Custom Name of the group or full URL as String
- * @param {function} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
+ * @param {function(string|null, fullGroupInfoObject|null)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  */
 module.exports.groupUrlToFullInfo = (groupURL, callback) => {
     return new Promise((resolve, reject) => {
@@ -180,7 +218,7 @@ module.exports.groupUrlToFullInfo = (groupURL, callback) => {
 /**
  * Checks if the provided ID or full URL points to a valid sharedfile
  * @param {String} sharedfileID Sharedfile ID or full sharedfile URL
- * @param {function} [callback] Optional: Called with `err` (String) and `isValid` (Boolean) parameters on completion
+ * @param {function(string|null, boolean|null)} [callback] Optional: Called with `err` (String) and `isValid` (Boolean) parameters on completion
  */
 module.exports.isValidSharedfileID = (sharedfileID, callback) => {
     return new Promise((resolve, reject) => {
