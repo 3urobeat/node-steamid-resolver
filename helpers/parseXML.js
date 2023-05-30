@@ -4,7 +4,7 @@
  * Created Date: 13.05.2023 22:30:59
  * Author: 3urobeat
  *
- * Last Modified: 16.05.2023 19:25:53
+ * Last Modified: 30.05.2023 13:42:00
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
@@ -30,7 +30,7 @@ function log(txt) {
 /**
  * Internal: Gets data and parses user or group XML data to object
  * @param {String} url Full URL of the user or group to steamcommunity.com
- * @returns {Promise} Resolves with user's or group's full information object or rejects with an Error String.
+ * @returns {Promise.<import("..").fullProfileInfoObject|import("..").fullGroupInfoObject>} Resolves with user's or group's full information object or rejects with an Error String.
  */
 module.exports._parseXML = (url) => {
     return new Promise((resolve, reject) => {
