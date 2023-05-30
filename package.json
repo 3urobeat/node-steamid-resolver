@@ -4,7 +4,8 @@
   "description": "NPM library to get steamIDs from profile or group links, the other way around and validate sharedfileIDs",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./index.js -d types"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,9 @@
   "dependencies": {
     "https": "^1.0.0",
     "xml2js": "^0.5.0"
+  },
+  "types": "./types/types.d.ts",
+  "devDependencies": {
+    "tsd-jsdoc": "^2.5.0"
   }
 }

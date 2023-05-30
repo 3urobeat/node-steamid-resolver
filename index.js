@@ -4,7 +4,7 @@
  * Created Date: 05.04.2023 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 30.05.2023 13:40:05
+ * Last Modified: 30.05.2023 14:31:40
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
@@ -38,7 +38,7 @@ const { _parseXML }   = require("./helpers/parseXML.js");
  *          ] }
  *      ],
  *      groups: [
- *          { group: Array<{ "$": { isPrimary: string }, groupID64: [string], groupName: [string], groupURL: [string], headline: [string], summary: [string], avatarIcon: [string], avatarMedium: [string], avatarFull: [string], memberCount: [string], membersInChat: [string], membersInGame: [string], membersOnline: [string] }> }
+ *          { group: array<{ "$": { isPrimary: string }, groupID64: [string], groupName: [string], groupURL: [string], headline: [string], summary: [string], avatarIcon: [string], avatarMedium: [string], avatarFull: [string], memberCount: [string], membersInChat: [string], membersInGame: [string], membersOnline: [string] }> }
  *      ]
  * }}
  */
@@ -53,7 +53,7 @@ const { _parseXML }   = require("./helpers/parseXML.js");
  *      ],
  *      memberCount: [string], totalPages: [string], currentPage: [string], startingMember: [string], nextPageLink: [string],
  *      members: [
- *          { steamID64: Array<string> }
+ *          { steamID64: array<string> }
  *      ]
  * }}
  */
@@ -62,7 +62,7 @@ const { _parseXML }   = require("./helpers/parseXML.js");
 /**
  * Get the custom profile url of a user as String by their steamID64 or full URL
  * @param {String} steamID64 steamID64 or full URL of the user
- * @param {function(string|null, string|null)} [callback] Optional: Called with `err` (String) and `customURL` (String) parameters on completion
+ * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `customURL` (String) parameters on completion
  * @return {Promise.<string>} Resolves with customURL on success or rejects with error on failure
  */
 module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
@@ -89,7 +89,7 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
 /**
  * Get the steamID64 of a user as String by their custom profile url or full URL
  * @param {String} customID Custom ID or full URL of the user as String
- * @param {function(string|null, string|null)} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
+ * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
  * @return {Promise.<string>} Resolves with steamID64 on success or rejects with error on failure
  */
 module.exports.customUrlToSteamID64 = (customID, callback) => {
@@ -116,7 +116,7 @@ module.exports.customUrlToSteamID64 = (customID, callback) => {
 /**
  * Get the full information of a user as Object by their steamID64 or full URL
  * @param {String} steamID64 steamID64 or full URL of the user as String
- * @param {function(string|null, fullProfileInfoObject|null)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
+ * @param {function(string, fullProfileInfoObject)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  * @return {Promise.<fullProfileInfoObject>} Resolves with fullInfo object on success or rejects with error string on failure
  */
 module.exports.steamID64ToFullInfo = (steamID64, callback) => {
@@ -143,7 +143,7 @@ module.exports.steamID64ToFullInfo = (steamID64, callback) => {
 /**
  * Get the full information of a user as Object by their custom profile url or full URL
  * @param {String} customID Custom ID or full URL of the user as String
- * @param {function(string|null, fullProfileInfoObject|null)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
+ * @param {function(string, fullProfileInfoObject)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  * @return {Promise.<fullProfileInfoObject>} Resolves with fullInfo object on success or rejects with error string on failure
  */
 module.exports.customUrlToFullInfo = (customID, callback) => {
@@ -170,7 +170,7 @@ module.exports.customUrlToFullInfo = (customID, callback) => {
 /**
  * Get the group64ID of a group as String by groupURL or full URL
  * @param {String} groupURL Custom Name of the group or full URL as String
- * @param {function(string|null, string|null)} [callback] Optional: Called with `err` (String) and `groupID64` (String) parameters on completion
+ * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `groupID64` (String) parameters on completion
  * @returns {Promise.<string>} Resolves with groupID64 on success or rejects with error on failure
  */
 module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
@@ -197,7 +197,7 @@ module.exports.groupUrlToGroupID64 = (groupURL, callback) => {
 /**
  * Get the full information of a group as Object by groupURL or full URL
  * @param {String} groupURL Custom Name of the group or full URL as String
- * @param {function(string|null, fullGroupInfoObject|null)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
+ * @param {function(string, fullGroupInfoObject)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  * @returns {Promise.<fullGroupInfoObject>} Resolves with fullInfo object on success or rejects with error string on failure
  */
 module.exports.groupUrlToFullInfo = (groupURL, callback) => {
@@ -224,7 +224,7 @@ module.exports.groupUrlToFullInfo = (groupURL, callback) => {
 /**
  * Checks if the provided ID or full URL points to a valid sharedfile
  * @param {String} sharedfileID Sharedfile ID or full sharedfile URL
- * @param {function(string|null, boolean|null)} [callback] Optional: Called with `err` (String) and `isValid` (Boolean) parameters on completion
+ * @param {function(string, boolean)} [callback] Optional: Called with `err` (String) and `isValid` (Boolean) parameters on completion
  * @returns {Promise.<boolean>} Resolves with `isValid` boolean on success or rejects with error string on failure
  */
 module.exports.isValidSharedfileID = (sharedfileID, callback) => {
