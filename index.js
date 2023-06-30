@@ -4,10 +4,10 @@
  * Created Date: 05.04.2023 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 30.05.2023 14:31:40
+ * Last Modified: 30.06.2023 09:58:40
  * Modified By: 3urobeat
  *
- * Copyright (c) 2023 3urobeat <https://github.com/HerrEurobeat>
+ * Copyright (c) 2023 3urobeat <https://github.com/3urobeat>
  *
  * Licensed under the MIT license: https://opensource.org/licenses/MIT
  * Permission is granted to use, copy, modify, and redistribute the work.
@@ -15,7 +15,7 @@
  */
 
 
-// Source: https://github.com/HerrEurobeat/node-steamid-resolver
+// Source: https://github.com/3urobeat/node-steamid-resolver
 
 const { _parseParam } = require("./helpers/parseParam.js");
 const { _parseXML }   = require("./helpers/parseXML.js");
