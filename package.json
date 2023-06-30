@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HerrEurobeat/node-steamid-resolver.git"
+    "url": "git+https://github.com/3urobeat/node-steamid-resolver.git"
   },
   "keywords": [
     "steam",
@@ -20,9 +20,9 @@
   "author": "3urobeat",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/HerrEurobeat/node-steamid-resolver/issues"
+    "url": "https://github.com/3urobeat/node-steamid-resolver/issues"
   },
-  "homepage": "https://github.com/HerrEurobeat/node-steamid-resolver#readme",
+  "homepage": "https://github.com/3urobeat/node-steamid-resolver#readme",
   "dependencies": {
     "https": "^1.0.0",
     "xml2js": "^0.5.0"
