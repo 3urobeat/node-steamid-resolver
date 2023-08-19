@@ -18,7 +18,7 @@
     "library"
   ],
   "author": "3urobeat",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/3urobeat/node-steamid-resolver/issues"
   },
