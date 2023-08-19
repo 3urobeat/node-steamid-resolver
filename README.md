@@ -1,19 +1,42 @@
-# node-steamid-resolver
-NPM library to get steamIDs from profile or group links, the other way around and validate sharedfileIDs.  
-Sharedfile IDs are used to uniquely identify Screenshots, Artworks and Guides on Steam.  
+<div align="center">
+    <h1>steamid-resolver</h1>
+    <h4>A node.js library to easily convert and check Steam Links & IDs!</h4>
+    <div>
+        <a href="#features">Features</a> •
+        <a href="#install">Install</a> •
+        <a href="#functions">Functions</a>
+    </div>
+    <p></p>
+    <div>
+        <a href="https://github.com/3urobeat/node-steamid-resolver/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/steamid-resolver"></a>
+        <a href="https://npmjs.com/package/steamid-resolver"><img src="https://img.shields.io/npm/v/steamid-resolver"></a>
+        <a href="https://github.com/3urobeat/node-steamid-resolver"><img src="https://img.shields.io/badge/-Give%20this%20repo%20a%20star!-yellow"></a>
+        <a href="https://npmjs.com/package/steamid-resolver"><img src="https://img.shields.io/npm/dm/steamid-resolver"></a>
+        <a href="https://github.com/sponsors/3urobeat"><img src="https://img.shields.io/badge/Donate-%241-orange"></a>
+    </div>
+    <img width=90% height:auto src="./.github/img/demo.png">
+</div>
+
+## Features
+Convert:
+- ...profile URL or vanity to steamID64
+- ...group URL or Custom URL to groupID64
+- ...steamID64 to profile vanity
+- ...validate sharedfile (screenshots, artworks & guides) IDs
+
 It can also return you all information Steam knows [about a profile](https://steamcommunity.com/id/3urobeat?xml=1) in a nice object format.  
 
 &nbsp;
 
 ## Install
-> Note: If you are here from GitHub **Packages** please use the npm package with the command below instead of the scoped GitHub command from above. It won't work.  
-
 Open a terminal in your project folder and run:  
-`npm install steamid-resolver`  
+\> `npm install steamid-resolver`
 
-You can then import the library in your code:  
-```
-const steamIdResolver = require("steamid-resolver")
+Do not use the scoped *GitHub Packages* command, it will not work.
+
+You can then import the library in your project:  
+```js
+const steamIdResolver = require("steamid-resolver");
 ```  
 
 &nbsp;
