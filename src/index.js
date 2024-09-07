@@ -1,13 +1,13 @@
 /*
  * File: index.js
  * Project: steamid-resolver
- * Created Date: 05.04.2023 19:04:56
+ * Created Date: 2023-04-05 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 30.06.2023 09:58:40
+ * Last Modified: 2024-09-07 11:35:42
  * Modified By: 3urobeat
  *
- * Copyright (c) 2023 3urobeat <https://github.com/3urobeat>
+ * Copyright (c) 2023 - 2024 3urobeat <https://github.com/3urobeat>
  *
  * Licensed under the MIT license: https://opensource.org/licenses/MIT
  * Permission is granted to use, copy, modify, and redistribute the work.
@@ -17,8 +17,8 @@
 
 // Source: https://github.com/3urobeat/node-steamid-resolver
 
-const { _parseParam } = require("./helpers/parseParam.js");
-const { _parseXML }   = require("./helpers/parseXML.js");
+const { _parseParam } = require("parseParam.js");
+const { _parseXML }   = require("parseXML.js");
 
 
 // Type definitions for full information objects
