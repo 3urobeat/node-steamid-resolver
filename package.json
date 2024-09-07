@@ -2,7 +2,7 @@
   "name": "steamid-resolver",
   "version": "1.3.4",
   "description": "NPM library to get steamIDs from profile or group links, the other way around and validate sharedfileIDs",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "node test.js",
     "types": "jsdoc -t node_modules/tsd-jsdoc/dist -r ./index.js -d types"

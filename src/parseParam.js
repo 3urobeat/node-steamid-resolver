@@ -1,13 +1,13 @@
 /*
  * File: parseParam.js
  * Project: steamid-resolver
- * Created Date: 13.05.2023 22:32:11
+ * Created Date: 2023-05-13 22:32:11
  * Author: 3urobeat
  *
- * Last Modified: 30.06.2023 09:58:40
+ * Last Modified: 2024-09-07 11:35:58
  * Modified By: 3urobeat
  *
- * Copyright (c) 2023 3urobeat <https://github.com/3urobeat>
+ * Copyright (c) 2023 - 2024 3urobeat <https://github.com/3urobeat>
  *
  * Licensed under the MIT license: https://opensource.org/licenses/MIT
  * Permission is granted to use, copy, modify, and redistribute the work.
