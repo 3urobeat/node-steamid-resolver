@@ -17,8 +17,8 @@
 
 // Source: https://github.com/3urobeat/node-steamid-resolver
 
-const { _parseParam } = require("parseParam.js");
-const { _parseXML }   = require("parseXML.js");
+const { _parseParam } = require("./parseParam.js");
+const { _parseXML }   = require("./parseXML.js");
 
 
 // Type definitions for full information objects
