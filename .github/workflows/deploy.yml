@@ -1,5 +1,5 @@
 name: npm-publish # Credit: https://github.com/formium/tsdx/issues/854#issuecomment-800112282 (modified to run on release)
-on:  
+on:
   push:
     tags:
       - '*'
@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js (NPM)
         uses: actions/setup-node@master
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Use cached node_modules
@@ -65,7 +65,7 @@ jobs:
       - name: Setup Node.js (GPR)
         uses: actions/setup-node@master
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: https://npm.pkg.github.com/
           scope: '${{ env.actor_name }}'
 
