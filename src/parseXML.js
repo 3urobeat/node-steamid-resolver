@@ -4,10 +4,10 @@
  * Created Date: 2023-05-13 22:30:59
  * Author: 3urobeat
  *
- * Last Modified: 2024-09-07 11:36:09
+ * Last Modified: 2025-01-20 22:08:40
  * Modified By: 3urobeat
  *
- * Copyright (c) 2023 - 2024 3urobeat <https://github.com/3urobeat>
+ * Copyright (c) 2023 - 2025 3urobeat <https://github.com/3urobeat>
  *
  * Licensed under the MIT license: https://opensource.org/licenses/MIT
  * Permission is granted to use, copy, modify, and redistribute the work.
@@ -66,9 +66,9 @@ module.exports._parseXML = (url) => {
 
                         // Check for profile/group not found error
                         if (parsed.response && parsed.response.error) {
-                            log(`[steamid-resolver] Error returned from Steam: ${parsed.response.error}`);
+                            log(`[steamid-resolver] Error returned from Steam: ${String(parsed.response.error)}`);
 
-                            reject(parsed.response.error);
+                            reject(String(parsed.response.error));
                             return;
                         }
 
