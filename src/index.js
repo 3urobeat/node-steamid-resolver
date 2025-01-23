@@ -4,7 +4,7 @@
  * Created Date: 2023-04-05 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 2025-01-21 21:37:51
+ * Last Modified: 2025-01-23 21:51:00
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 - 2025 3urobeat <https://github.com/3urobeat>
@@ -76,12 +76,12 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
         _parseXML(`https://steamcommunity.com/profiles/${steamID64}`)
             .then(res => {
                 // Check if profile is private and return an error because private profiles do not contain a customURL property
-                if (res.privacyState && res.privacyState[0] == "public") {
+                if (res.customURL && res.customURL[0]) {
                     resolve(res.customURL[0]);
                     callback(null, res.customURL[0]);
                 } else {
-                    reject("The specified profile is private.")
-                    callback("The specified profile is private.", null);
+                    reject("Failed to resolve customURL!")
+                    callback("Failed to resolve customURL!", null);
                 }
             })
             .catch(err => {
