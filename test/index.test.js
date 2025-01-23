@@ -4,7 +4,7 @@
  * Created Date: 2024-09-07 11:33:09
  * Author: 3urobeat
  *
- * Last Modified: 2025-01-20 22:13:17
+ * Last Modified: 2025-01-23 21:58:04
  * Modified By: 3urobeat
  *
  * Copyright (c) 2024 - 2025 3urobeat <https://github.com/3urobeat>
@@ -28,10 +28,10 @@ test("Convert steamID64 '76561198260031749' to customURL '3urobeat'", () => {
     });
 });
 
-test("Convert private steamID64 '76561197960287930' to customURL", () => {
+test("Convert private steamID64 '76561197960287930' to customURL (resolve by following redirect)", () => {
     index.steamID64ToCustomUrl("76561197960287930", (err, res) => {
-        expect(err).toBe("The specified profile is private.");
-        expect(res).toBe(null);
+        expect(err).toBe(null);
+        expect(res).toBe("GabeLoganNewell");
     });
 });
 
