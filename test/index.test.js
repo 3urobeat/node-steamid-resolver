@@ -4,7 +4,7 @@
  * Created Date: 2024-09-07 11:33:09
  * Author: 3urobeat
  *
- * Last Modified: 2025-01-23 21:58:04
+ * Last Modified: 2025-01-23 22:09:09
  * Modified By: 3urobeat
  *
  * Copyright (c) 2024 - 2025 3urobeat <https://github.com/3urobeat>
@@ -61,6 +61,22 @@ test("Convert invalid customURL 'a' to steamID64", () => {
     index.customUrlToSteamID64("a", (err, res) => {
         expect(err).toBe("The specified profile could not be found.");
         expect(res).toBe(null);
+    });
+});
+
+
+test("Convert steamID64 '76561197960287930' to profile name 'Rabscuttle'", () => {
+    index.steamID64ToProfileName("76561197960287930", (err, res) => {
+        expect(err).toBe(null);
+        expect(res).toBe("Rabscuttle");
+    });
+});
+
+
+test("Convert customURL 'gabelogannewell' to profile name 'Rabscuttle'", () => {
+    index.customUrlToProfileName("gabelogannewell", (err, res) => {
+        expect(err).toBe(null);
+        expect(res).toBe("Rabscuttle");
     });
 });
 

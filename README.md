@@ -66,11 +66,23 @@ Note: You cannot use both callbacks and `.catch()` as a Promise is only rejected
     - `err` - A String detailing the reason of the failure or `null` on success
     - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as an object](https://steamcommunity.com/id/3urobeat?xml=1)  
 
+### steamID64ToProfileName(steamID64, callback)
+- `steamID64` - steamID64 or full URL of the user you want to get the profile name of. Example: `"76561197960287930"` or `"https://steamcommunity.com/profiles/76561197960287930"`  
+- `callback` - Optional: Called on error or success  
+    - `err` - A String detailing the reason of the failure or `null` on success
+    - `profileName` - The profile name of the user or `null` on failure. Example on success: `"Rabscuttle"`  
+
 ### customUrlToFullInfo(customURL, callback)  
 - `customURL` - customURL or full URL of the user you want to get all information of.  
 - `callback` - Optional: Called on error or success  
     - `err` - A String detailing the reason of the failure or `null` on success
     - `info` - The full information of the user as object or `null` on failure. Example: [Imagine this but as an object](https://steamcommunity.com/id/3urobeat?xml=1) 
+
+### customUrlToProfileName(customURL, callback)
+- `customURL` - customURL or full URL of the user you want to get the profile name of. Example: `"gabelogannewell"` or `"https://steamcommunity.com/id/gabelogannewell"`  
+- `callback` - Optional: Called on error or success  
+    - `err` - A String detailing the reason of the failure or `null` on success
+    - `profileName` - The profile name of the user or `null` on failure. Example on success: `"Rabscuttle"`  
 
 ### groupUrlToGroupID64(groupURL, callback)  
 - `groupURL` - groupURL or full URL of the group you want to get the groupID64 of. Example: `"3urobeatGroup"` or `"https://steamcommunity.com/groups/3urobeatGroup"`  
