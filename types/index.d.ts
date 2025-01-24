@@ -1,20 +1,3 @@
-/*
- * File: index.d.ts
- * Project: steamid-resolver
- * Created Date: 2025-01-11 15:19:31
- * Author: 3urobeat
- *
- * Last Modified: 2025-01-11 15:20:38
- * Modified By: 3urobeat
- *
- * Copyright (c) 2025 3urobeat <https://github.com/3urobeat>
- *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
-
-
 /**
  * Get the custom profile url of a user as String by their steamID64 or full URL
  * @param {String} steamID64 steamID64 or full URL of the user
@@ -23,12 +6,26 @@
  */
 export function steamID64ToCustomUrl(steamID64: string, callback?: (arg0: string, arg1: string) => any): Promise<string>;
 /**
+ * Get the profile name of a user as String by their steamID64 or full URL
+ * @param {String} steamID64 steamID64 or full URL of the user
+ * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `profileName` (String) parameters on completion
+ * @return {Promise.<string>} Resolves with profile name on success or rejects with error on failure
+ */
+export function steamID64ToProfileName(steamID64: string, callback?: (arg0: string, arg1: string) => any): Promise<string>;
+/**
  * Get the steamID64 of a user as String by their custom profile url or full URL
- * @param {String} customID Custom ID or full URL of the user as String
+ * @param {String} customURL Custom ID or full URL of the user as String
  * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
  * @return {Promise.<string>} Resolves with steamID64 on success or rejects with error on failure
  */
-export function customUrlToSteamID64(customID: string, callback?: (arg0: string, arg1: string) => any): Promise<string>;
+export function customUrlToSteamID64(customURL: string, callback?: (arg0: string, arg1: string) => any): Promise<string>;
+/**
+ * Get the profile name of a user as String by their custom profile url or full URL
+ * @param {String} customURL Custom ID or full URL of the user as String
+ * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `profileName` (String) parameters on completion
+ * @return {Promise.<string>} Resolves with profile name on success or rejects with error on failure
+ */
+export function customUrlToProfileName(customURL: string, callback?: (arg0: string, arg1: string) => any): Promise<string>;
 /**
  * Get the full information of a user as Object by their steamID64 or full URL
  * @param {String} steamID64 steamID64 or full URL of the user as String
@@ -38,11 +35,11 @@ export function customUrlToSteamID64(customID: string, callback?: (arg0: string,
 export function steamID64ToFullInfo(steamID64: string, callback?: (arg0: string, arg1: fullProfileInfoObject) => any): Promise<fullProfileInfoObject>;
 /**
  * Get the full information of a user as Object by their custom profile url or full URL
- * @param {String} customID Custom ID or full URL of the user as String
+ * @param {String} customURL Custom ID or full URL of the user as String
  * @param {function(string, fullProfileInfoObject)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  * @return {Promise.<fullProfileInfoObject>} Resolves with fullInfo object on success or rejects with error string on failure
  */
-export function customUrlToFullInfo(customID: string, callback?: (arg0: string, arg1: fullProfileInfoObject) => any): Promise<fullProfileInfoObject>;
+export function customUrlToFullInfo(customURL: string, callback?: (arg0: string, arg1: fullProfileInfoObject) => any): Promise<fullProfileInfoObject>;
 /**
  * Get the group64ID of a group as String by groupURL or full URL
  * @param {String} groupURL Custom Name of the group or full URL as String
