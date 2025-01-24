@@ -4,7 +4,7 @@
  * Created Date: 2023-04-05 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 2025-01-24 17:32:06
+ * Last Modified: 2025-01-24 17:36:11
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 - 2025 3urobeat <https://github.com/3urobeat>
@@ -121,19 +121,19 @@ module.exports.steamID64ToProfileName = (steamID64, callback) => {
 
 /**
  * Get the steamID64 of a user as String by their custom profile url or full URL
- * @param {String} customID Custom ID or full URL of the user as String
+ * @param {String} customURL Custom ID or full URL of the user as String
  * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
  * @return {Promise.<string>} Resolves with steamID64 on success or rejects with error on failure
  */
-module.exports.customUrlToSteamID64 = (customID, callback) => {
+module.exports.customUrlToSteamID64 = (customURL, callback) => {
     return new Promise((resolve, reject) => {
         // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
         reject = (!callback || typeof callback !== "function") ? reject : resolve;
         callback = callback || (() => {});
 
-        customID = _parseParam(customID);
+        customURL = _parseParam(customURL);
 
-        _parseXML(`https://steamcommunity.com/id/${customID}`)
+        _parseXML(`https://steamcommunity.com/id/${customURL}`)
             .then(res => {
                 resolve(res.steamID64[0]);
                 callback(null, res.steamID64[0]);
@@ -148,19 +148,19 @@ module.exports.customUrlToSteamID64 = (customID, callback) => {
 
 /**
  * Get the profile name of a user as String by their custom profile url or full URL
- * @param {String} customID Custom ID or full URL of the user as String
+ * @param {String} customURL Custom ID or full URL of the user as String
  * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `profileName` (String) parameters on completion
  * @return {Promise.<string>} Resolves with profile name on success or rejects with error on failure
  */
-module.exports.customUrlToProfileName = (customID, callback) => {
+module.exports.customUrlToProfileName = (customURL, callback) => {
     return new Promise((resolve, reject) => {
         // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
         reject = (!callback || typeof callback !== "function") ? reject : resolve;
         callback = callback || (() => {});
 
-        customID = _parseParam(customID);
+        customURL = _parseParam(customURL);
 
-        _parseXML(`https://steamcommunity.com/id/${customID}`)
+        _parseXML(`https://steamcommunity.com/id/${customURL}`)
             .then(res => {
                 resolve(res.steamID[0]);
                 callback(null, res.steamID[0]);
@@ -202,19 +202,19 @@ module.exports.steamID64ToFullInfo = (steamID64, callback) => {
 
 /**
  * Get the full information of a user as Object by their custom profile url or full URL
- * @param {String} customID Custom ID or full URL of the user as String
+ * @param {String} customURL Custom ID or full URL of the user as String
  * @param {function(string, fullProfileInfoObject)} [callback] Optional: Called with `err` (String) and `info` (Object) parameters on completion
  * @return {Promise.<fullProfileInfoObject>} Resolves with fullInfo object on success or rejects with error string on failure
  */
-module.exports.customUrlToFullInfo = (customID, callback) => {
+module.exports.customUrlToFullInfo = (customURL, callback) => {
     return new Promise((resolve, reject) => {
         // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
         reject = (!callback || typeof callback !== "function") ? reject : resolve;
         callback = callback || (() => {});
 
-        customID = _parseParam(customID);
+        customURL = _parseParam(customURL);
 
-        _parseXML(`https://steamcommunity.com/id/${customID}`)
+        _parseXML(`https://steamcommunity.com/id/${customURL}`)
             .then(res => {
                 resolve(res);
                 callback(null, res);
