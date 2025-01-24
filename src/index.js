@@ -4,7 +4,7 @@
  * Created Date: 2023-04-05 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 2025-01-23 21:51:00
+ * Last Modified: 2025-01-24 17:32:06
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 - 2025 3urobeat <https://github.com/3urobeat>
@@ -93,6 +93,33 @@ module.exports.steamID64ToCustomUrl = (steamID64, callback) => {
 
 
 /**
+ * Get the profile name of a user as String by their steamID64 or full URL
+ * @param {String} steamID64 steamID64 or full URL of the user
+ * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `profileName` (String) parameters on completion
+ * @return {Promise.<string>} Resolves with profile name on success or rejects with error on failure
+ */
+module.exports.steamID64ToProfileName = (steamID64, callback) => {
+    return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
+        steamID64 = _parseParam(steamID64);
+
+        _parseXML(`https://steamcommunity.com/profiles/${steamID64}`)
+            .then(res => {
+                resolve(res.steamID[0]);
+                callback(null, res.steamID[0]);
+            })
+            .catch(err => {
+                reject(err);
+                callback(err, null);
+            });
+    });
+};
+
+
+/**
  * Get the steamID64 of a user as String by their custom profile url or full URL
  * @param {String} customID Custom ID or full URL of the user as String
  * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `steamID64` (String) parameters on completion
@@ -110,6 +137,33 @@ module.exports.customUrlToSteamID64 = (customID, callback) => {
             .then(res => {
                 resolve(res.steamID64[0]);
                 callback(null, res.steamID64[0]);
+            })
+            .catch(err => {
+                reject(err);
+                callback(err, null);
+            });
+    });
+};
+
+
+/**
+ * Get the profile name of a user as String by their custom profile url or full URL
+ * @param {String} customID Custom ID or full URL of the user as String
+ * @param {function(string, string)} [callback] Optional: Called with `err` (String) and `profileName` (String) parameters on completion
+ * @return {Promise.<string>} Resolves with profile name on success or rejects with error on failure
+ */
+module.exports.customUrlToProfileName = (customID, callback) => {
+    return new Promise((resolve, reject) => {
+        // Hack to support Promises & Callbacks: Resolve errors instead of rejecting them when callback is defined to prevent UnhandledPromiseRejection crash
+        reject = (!callback || typeof callback !== "function") ? reject : resolve;
+        callback = callback || (() => {});
+
+        customID = _parseParam(customID);
+
+        _parseXML(`https://steamcommunity.com/id/${customID}`)
+            .then(res => {
+                resolve(res.steamID[0]);
+                callback(null, res.steamID[0]);
             })
             .catch(err => {
                 reject(err);
