@@ -31,7 +31,7 @@ export interface FullProfileInfoObject {
   vacBanned: [string];
   tradeBanState: [string];
   isLimitedAccount: [string];
-  customURL?: [string];
+  customURL?: [string]; // Optional - can be missing for private profiles
   memberSince: [string];
   steamRating: [string];
   hoursPlayed2Wk: [string];
@@ -39,39 +39,23 @@ export interface FullProfileInfoObject {
   location: [string];
   realname: [string];
   summary: [string];
-  mostPlayedGames: [
+
+  // Optional - present when user is in-game
+  inGameServerIP?: [string];
+  inGameInfo?: [
+    {
+      gameName: [string];
+      gameLink: [string];
+      gameIcon: [string];
+      gameLogo: [string];
+      gameLogoSmall: [string];
+    }
+  ];
+
+  // Optional - not all profiles have this section
+  mostPlayedGames?: [
     {
       mostPlayedGame: [
-        {
-          gameName: [string];
-          gameLink: [string];
-          gameIcon: [string];
-          gameLogo: [string];
-          gameLogoSmall: [string];
-          hoursPlayed: [string];
-          hoursOnRecord: [string];
-          statsName: [string];
-        },
-        {
-          gameName: [string];
-          gameLink: [string];
-          gameIcon: [string];
-          gameLogo: [string];
-          gameLogoSmall: [string];
-          hoursPlayed: [string];
-          hoursOnRecord: [string];
-          statsName: [string];
-        },
-        {
-          gameName: [string];
-          gameLink: [string];
-          gameIcon: [string];
-          gameLogo: [string];
-          gameLogoSmall: [string];
-          hoursPlayed: [string];
-          hoursOnRecord: [string];
-          statsName: [string];
-        },
         {
           gameName: [string];
           gameLink: [string];
@@ -85,24 +69,27 @@ export interface FullProfileInfoObject {
       ];
     }
   ];
-  groups: [
+
+  // Optional - not all profiles have groups
+  groups?: [
     {
       group: Array<{
         $: {
           isPrimary: string;
         };
         groupID64: [string];
-        groupName: [string];
-        groupURL: [string];
-        headline: [string];
-        summary: [string];
-        avatarIcon: [string];
-        avatarMedium: [string];
-        avatarFull: [string];
-        memberCount: [string];
-        membersInChat: [string];
-        membersInGame: [string];
-        membersOnline: [string];
+        // All other group fields are optional since many groups only have minimal data
+        groupName?: [string];
+        groupURL?: [string];
+        headline?: [string];
+        summary?: [string];
+        avatarIcon?: [string];
+        avatarMedium?: [string];
+        avatarFull?: [string];
+        memberCount?: [string];
+        membersInChat?: [string];
+        membersInGame?: [string];
+        membersOnline?: [string];
       }>;
     }
   ];

@@ -74,37 +74,161 @@ test("Convert customURL 'gabelogannewell' to profile name 'Rabscuttle'", () => {
   });
 });
 
-test("Convert steamID64 '76561198260031749' to full info (partial check)", () => {
+test("Convert steamID64 '76561198260031749' to full info (comprehensive check with in-game and groups)", () => {
   index.steamID64ToFullInfo("76561198260031749", (err, res) => {
     expect(err).toBe(null);
+    expect(res).not.toBe(null);
 
-    // Check if object contains at least 5 props which are always there
-    expect(Object.keys(res).length > 5).toBeTruthy();
+    // Check basic profile info
+    expect(res.steamID64).toEqual(["76561198260031749"]);
+    expect(res.customURL).toEqual(["3urobeat"]);
+    expect(res.onlineState).toEqual(["in-game"]);
 
-    // Do a partial check of a few properties
-    expect(res).toEqual(
-      expect.objectContaining({
-        customURL: ["3urobeat"],
-        steamID64: ["76561198260031749"],
-      })
-    );
+    // Check in-game info is present
+    expect(res.inGameInfo).toBeDefined();
+    expect(res.inGameInfo[0].gameName).toEqual(["Counter-Strike 2"]);
+    expect(res.inGameInfo[0].gameLink).toEqual([
+      "https://steamcommunity.com/app/730",
+    ]);
+
+    // Check groups are present
+    expect(res.groups).toBeDefined();
+    expect(res.groups[0].group).toBeDefined();
+    expect(res.groups[0].group.length).toBeGreaterThan(0);
+
+    // Check primary group
+    const primaryGroup = res.groups[0].group.find((g) => g.$.isPrimary === "1");
+    expect(primaryGroup).toBeDefined();
+    expect(primaryGroup.groupID64).toEqual(["103582791464712227"]);
+    expect(primaryGroup.groupName).toEqual(["3urobeat"]);
+
+    // Check that some groups have minimal data (only groupID64)
+    const minimalGroups = res.groups[0].group.filter((g) => !g.groupName);
+    expect(minimalGroups.length).toBeGreaterThan(0);
+
+    // Check mostPlayedGames structure
+    expect(res.mostPlayedGames).toBeDefined();
+    expect(res.mostPlayedGames[0].mostPlayedGame).toBeDefined();
+    expect(res.mostPlayedGames[0].mostPlayedGame[0].gameName).toEqual([
+      "Counter-Strike 2",
+    ]);
   });
 });
 
-test("Convert customURL '3urobeat' to full info (partial check)", () => {
+test("Convert customURL 'doblev' to full info (profile with no groups)", () => {
+  index.customUrlToFullInfo("doblev", (err, res) => {
+    expect(err).toBe(null);
+    expect(res).not.toBe(null);
+
+    // Check basic profile info
+    expect(res.steamID64).toEqual(["76561198060012473"]);
+    expect(res.customURL).toEqual(["doblev"]);
+    expect(res.onlineState).toEqual(["offline"]);
+    expect(res.location).toEqual(["Switzerland"]);
+    expect(res.summary).toEqual(["YCombinator partner"]);
+
+    // Check groups are NOT present
+    expect(res.groups).toBeUndefined();
+
+    // Check in-game info is NOT present (offline)
+    expect(res.inGameInfo).toBeUndefined();
+
+    // Check mostPlayedGames might not be present
+    if (res.mostPlayedGames) {
+      expect(res.mostPlayedGames).toBeDefined();
+    }
+  });
+});
+
+test("Convert invalid customURL to steamID64 (not found)", () => {
+  index.customUrlToSteamID64("nonexistentuser123456", (err, res) => {
+    expect(err).toBe("The specified profile could not be found.");
+    expect(res).toBe(null);
+  });
+});
+
+test("Convert invalid steamID64 to customURL (not found)", () => {
+  index.steamID64ToCustomUrl("12345678901234567", (err, res) => {
+    expect(err).toBe("The specified profile could not be found.");
+    expect(res).toBe(null);
+  });
+});
+
+test("Convert invalid customURL to full info (not found)", () => {
+  index.customUrlToFullInfo("nonexistentuser123456", (err, res) => {
+    expect(err).toBe("The specified profile could not be found.");
+    expect(res).toBe(null);
+  });
+});
+
+test("Convert invalid steamID64 to full info (not found)", () => {
+  index.steamID64ToFullInfo("12345678901234567", (err, res) => {
+    expect(err).toBe("The specified profile could not be found.");
+    expect(res).toBe(null);
+  });
+});
+
+test("Convert invalid customURL to profile name (not found)", () => {
+  index.customUrlToProfileName("nonexistentuser123456", (err, res) => {
+    expect(err).toBe("The specified profile could not be found.");
+    expect(res).toBe(null);
+  });
+});
+
+test("Convert invalid steamID64 to profile name (not found)", () => {
+  index.steamID64ToProfileName("12345678901234567", (err, res) => {
+    expect(err).toBe("The specified profile could not be found.");
+    expect(res).toBe(null);
+  });
+});
+
+test("Test private profile customURL resolution", () => {
+  // Test with Gabe's profile which is private but has redirect
+  index.steamID64ToCustomUrl("76561197960287930", (err, res) => {
+    expect(err).toBe(null);
+    expect(res).toBe("GabeLoganNewell");
+  });
+});
+
+test("Test profile with different online states", () => {
+  // Test offline profile
+  index.customUrlToFullInfo("doblev", (err, res) => {
+    expect(err).toBe(null);
+    expect(res.onlineState).toEqual(["offline"]);
+    expect(res.stateMessage).toEqual(["Offline"]);
+  });
+
+  // Test in-game profile
   index.customUrlToFullInfo("3urobeat", (err, res) => {
     expect(err).toBe(null);
+    expect(res.onlineState).toEqual(["in-game"]);
+    expect(res.stateMessage[0]).toContain("In-Game");
+  });
+});
 
-    // Check if object contains at least 5 props which are always there
-    expect(Object.keys(res).length > 5).toBeTruthy();
+test("Test groups structure with minimal data", () => {
+  index.steamID64ToFullInfo("76561198260031749", (err, res) => {
+    expect(err).toBe(null);
+    expect(res.groups).toBeDefined();
 
-    // Do a partial check of a few properties
-    expect(res).toEqual(
-      expect.objectContaining({
-        customURL: ["3urobeat"],
-        steamID64: ["76561198260031749"],
-      })
-    );
+    const groups = res.groups[0].group;
+    expect(groups.length).toBeGreaterThan(10); // Should have many groups
+
+    // Check that some groups have full data
+    const fullGroups = groups.filter((g) => g.groupName && g.groupURL);
+    expect(fullGroups.length).toBeGreaterThan(0);
+
+    // Check that some groups have minimal data
+    const minimalGroups = groups.filter((g) => !g.groupName);
+    expect(minimalGroups.length).toBeGreaterThan(0);
+
+    // All groups should have isPrimary and groupID64
+    groups.forEach((group) => {
+      expect(group.$).toBeDefined();
+      expect(group.$.isPrimary).toBeDefined();
+      expect(group.groupID64).toBeDefined();
+      expect(group.groupID64[0]).toMatch(/^\d+$/);
+    });
   });
 });
 
