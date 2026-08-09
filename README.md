@@ -48,6 +48,22 @@ Note: You cannot use both callbacks and `.catch()` as a Promise is only rejected
 
 &nbsp;
 
+### SteamIdResolver class
+All functions are also available on a `SteamIdResolver` instance. This allows you to set a proxy which will then be used for all requests made by that instance:
+
+```js
+const { SteamIdResolver } = require("steamid-resolver");
+
+const resolver = new SteamIdResolver("http://host:port"); // Optional: Set a HTTP/S proxy
+// const resolver = new SteamIdResolver(); // Without a proxy
+
+const steamID64 = await resolver.customUrlToSteamID64("3urobeat");
+```
+
+Instances created without a proxy behave identically to the functions exported directly from the library.
+
+&nbsp;
+
 ### steamID64ToCustomUrl(steamID64, callback)  
 - `steamID64` - steamID64 or full URL of the user you want to get the customURL of. Example: `"76561198260031749"` or `"https://steamcommunity.com/profiles/76561198260031749"`  
 - `callback` - Optional: Called on error or success  
