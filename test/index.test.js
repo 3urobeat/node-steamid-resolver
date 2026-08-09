@@ -4,7 +4,7 @@
  * Created Date: 2024-09-07 11:33:09
  * Author: 3urobeat
  *
- * Last Modified: 2026-08-08 13:40:29
+ * Last Modified: 2026-08-09 22:41:07
  * Modified By: 3urobeat
  *
  * Copyright (c) 2024 - 2026 3urobeat <https://github.com/3urobeat>
@@ -18,7 +18,8 @@
 // This file is read by jest to test all functions exposed to the user
 
 
-const index = require("../src/index.js");
+const index        = require("../src/index.js");
+const { _httpGet } = require("../src/parseXML.js");
 
 
 test("Convert steamID64 '76561198260031749' to customURL '3urobeat'", async () => {
@@ -139,4 +140,37 @@ test("Sharedfile URL '2966606880' should point to a valid element", async () => 
 
 test("Sharedfile URL '123' should point to an invalid element", async () => {
     await expect(index.isValidSharedfileID("123")).resolves.toBeFalsy();
+});
+
+
+/**
+ * Test for proxy instance. These may fail if these publicly accessible proxies become unavailable which sucks a little.
+ */
+
+test("SteamIdResolver instance (with HTTP proxy): Check proxy usage and convert customURL '3urobeat' to steamID64 '76561198260031749'", async () => {
+    const proxyIp   = "194.150.110.134";
+    const proxyPort = "80";
+    const resolver = new index.SteamIdResolver(`http://${proxyIp}:${proxyPort}`);
+
+    // Check if connection works
+    const myIp = await _httpGet("https://icanhazip.com", resolver.agent);
+    expect(myIp.trim()).toBe(proxyIp);
+
+    // Run actual test only after connection is verified
+    const res = await resolver.customUrlToSteamID64("3urobeat");
+    expect(res).toBe("76561198260031749");
+});
+
+test("SteamIdResolver instance (with HTTPS proxy): Check proxy usage and convert customURL '3urobeat' to steamID64 '76561198260031749'", async () => {
+    const proxyIp   = "85.93.8.159";
+    const proxyPort = "8081";
+    const resolver  = new index.SteamIdResolver(`https://${proxyIp}:${proxyPort}`);
+
+    // Check if connection works
+    const myIp = await _httpGet("https://icanhazip.com", resolver.agent);
+    expect(myIp.trim()).toBe(proxyIp);
+
+    // Run actual test only after connection is verified
+    const res = await resolver.customUrlToSteamID64("3urobeat");
+    expect(res).toBe("76561198260031749");
 });
