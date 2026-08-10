@@ -39,28 +39,22 @@ You can then import the library in your project:
 const steamIdResolver = require("steamid-resolver");
 ```  
 
+### SteamIdResolver class
+Optionally, you can create your own `SteamIdResolver` instance, to specify a proxy for all functions to use:
+
+```js
+const { SteamIdResolver } = require("steamid-resolver");
+
+const resolver = new SteamIdResolver("http://host:port"); // Optional: Set a HTTP/S proxy
+```
+
+
 &nbsp;
 
 ## Functions  
 All functions support both Promises and callbacks!  
 This means you can either use `await`, `.then(response => {})` & `.catch(err => {})` or pass a callback function `(err, response) => {}` as parameter.  
 Note: You cannot use both callbacks and `.catch()` as a Promise is only rejected when no callback was passed. This prevents any `UnhandledPromiseRejection` errors crashing your process.  
-
-&nbsp;
-
-### SteamIdResolver class
-All functions are also available on a `SteamIdResolver` instance. This allows you to set a proxy which will then be used for all requests made by that instance:
-
-```js
-const { SteamIdResolver } = require("steamid-resolver");
-
-const resolver = new SteamIdResolver("http://host:port"); // Optional: Set a HTTP/S proxy
-// const resolver = new SteamIdResolver(); // Without a proxy
-
-const steamID64 = await resolver.customUrlToSteamID64("3urobeat");
-```
-
-Instances created without a proxy behave identically to the functions exported directly from the library.
 
 &nbsp;
 
