@@ -4,7 +4,7 @@
  * Created Date: 2023-04-05 19:04:56
  * Author: 3urobeat
  *
- * Last Modified: 2026-08-05 19:12:11
+ * Last Modified: 2026-08-10 22:13:30
  * Modified By: 3urobeat
  *
  * Copyright (c) 2023 - 2026 3urobeat <https://github.com/3urobeat>
@@ -18,7 +18,7 @@
 // Source: https://github.com/3urobeat/node-steamid-resolver
 
 const https            = require("https");
-const HttpsProxyAgent  = require("https-proxy-agent");
+const HttpsProxyAgent  = require("https-proxy-agent"); // This requires us to use v5.0.1 in this CJS lib, which sucks
 const { _parseParam }  = require("./parseParam.js");
 const { _parseXML }    = require("./parseXML.js");
 
